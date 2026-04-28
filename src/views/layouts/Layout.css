@@ -2,6 +2,18 @@
    LAYOUT — Navbar + Main wrapper
    ============================================================ */
 
+/* ─── Theme-aware layout variables ─── */
+:root {
+  --navbar-bg: rgba(15, 17, 23, 0.85);
+  --navbar-shadow: 0 2px 16px rgba(0, 0, 0, 0.2);
+  --mobile-menu-bg: rgba(15, 17, 23, 0.97);
+}
+[data-theme="light"] {
+  --navbar-bg: rgba(255, 255, 255, 0.75);
+  --navbar-shadow: 0 2px 16px rgba(80, 130, 200, 0.1);
+  --mobile-menu-bg: rgba(220, 235, 255, 0.97);
+}
+
 /* ─── App Layout ─── */
 .app-layout {
   position: relative;
@@ -20,11 +32,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(15, 17, 23, 0.85);
+  background: var(--navbar-bg);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-bottom: 1px solid var(--border);
+  box-shadow: var(--navbar-shadow);
   animation: slide-down 0.4s ease;
+  transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
 .navbar-logo {
@@ -136,6 +150,81 @@
 }
 .btn-primary:active { transform: translateY(0); }
 
+/* ─── Theme Slide Toggle ─── */
+.theme-switch {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.theme-switch-track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 64px;
+  height: 32px;
+  border-radius: 16px;
+  background: rgba(30, 40, 80, 0.6);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.3);
+}
+
+/* Light mode track */
+.theme-switch--light .theme-switch-track {
+  background: rgba(168, 210, 255, 0.6);
+  border-color: rgba(91, 135, 212, 0.4);
+  box-shadow: inset 0 2px 6px rgba(80,130,200,0.2), 0 0 12px rgba(255, 200, 50, 0.25);
+}
+
+/* Sliding thumb */
+.theme-switch-thumb {
+  position: absolute;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 2;
+}
+
+/* Thumb slides right in light mode */
+.theme-switch--light .theme-switch-thumb {
+  transform: translateX(32px);
+  background: linear-gradient(135deg, #ffe066, #ffb830);
+  box-shadow: 0 2px 10px rgba(255, 180, 0, 0.5);
+}
+
+/* Icons */
+.theme-switch-icon {
+  position: absolute;
+  font-size: 0.75rem;
+  line-height: 1;
+  z-index: 1;
+  transition: opacity 0.25s ease;
+  user-select: none;
+}
+.theme-switch-moon { left: 7px;  opacity: 1; }
+.theme-switch-sun  { right: 7px; opacity: 0.5; }
+
+.theme-switch--light .theme-switch-moon { opacity: 0.4; }
+.theme-switch--light .theme-switch-sun  { opacity: 1; }
+
+/* Hover glow */
+.theme-switch:hover .theme-switch-track {
+  border-color: var(--border-glow);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.2), 0 0 14px rgba(91,127,255,0.3);
+}
+.theme-switch--light:hover .theme-switch-track {
+  box-shadow: inset 0 2px 6px rgba(80,130,200,0.15), 0 0 14px rgba(255,180,0,0.4);
+}
+
+
 /* Hamburger mobile */
 .hamburger {
   display: none;
@@ -164,12 +253,13 @@
   position: fixed;
   inset: 64px 0 0;
   z-index: 99;
-  background: rgba(15, 17, 23, 0.97);
+  background: var(--mobile-menu-bg);
   backdrop-filter: blur(20px);
   flex-direction: column;
   padding: 24px;
   gap: 8px;
   animation: fade-in-up 0.3s ease;
+  transition: background 0.35s ease;
 }
 .mobile-menu.open { display: flex; }
 

@@ -1,4 +1,21 @@
+import { useState, useEffect } from "react";
 import "./Layout.css";
+
+/** Quản lý theme sáng/tối với localStorage */
+function useTheme() {
+  const [isDark, setIsDark] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    return saved ? saved === 'dark' : true; // mặc định dark
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  }, [isDark]);
+
+  const toggleTheme = () => setIsDark(prev => !prev);
+  return { isDark, toggleTheme };
+}
 
 /**
  * VIEW LAYER — MainLayout
@@ -12,6 +29,7 @@ export default function MainLayout({
   isMenuOpen,
   onToggleMenu,
 }) {
+  const { isDark, toggleTheme } = useTheme();
   return (
     <div className="app-layout">
       {/* ── Animated Background ── */}
@@ -55,6 +73,20 @@ export default function MainLayout({
 
         {/* Actions */}
         <div className="navbar-actions">
+          {/* Theme slide toggle */}
+          <button
+            className={`theme-switch${isDark ? '' : ' theme-switch--light'}`}
+            onClick={toggleTheme}
+            aria-label={isDark ? 'Chuyển sang giao diện sáng' : 'Chuyển sang giao diện tối'}
+            role="switch"
+            aria-checked={!isDark}
+          >
+            <span className="theme-switch-track">
+              <span className="theme-switch-icon theme-switch-moon">🌙</span>
+              <span className="theme-switch-icon theme-switch-sun">☀️</span>
+              <span className="theme-switch-thumb" />
+            </span>
+          </button>
           <button
             className="btn-outline"
             onClick={() => onTabChange("contact")}

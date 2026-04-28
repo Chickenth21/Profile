@@ -5,7 +5,7 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&display=swap');
 
-/* ─── CSS Variables ─── */
+/* ─── CSS Variables — Dark Theme (default) ─── */
 :root {
   --primary: #5b7fff;
   --primary-light: #7b9fff;
@@ -45,6 +45,47 @@
 
   font-family: 'Inter', system-ui, sans-serif;
   color-scheme: dark;
+}
+
+/* ─── CSS Variables — Light Theme ─── */
+[data-theme="light"] {
+  --primary: #5b87d4;
+  --primary-light: #7baae0;
+  --primary-dark: #3a6ab8;
+  --accent: #8ab4e8;
+  --accent-light: #adc9f0;
+  --pink: #e8a4c8;
+  --cyan: #7fd8e8;
+
+  --bg: #dce8f8;
+  --bg-2: #e8f0fb;
+  --bg-3: #f0f6ff;
+  --surface: rgba(255, 255, 255, 0.55);
+  --surface-hover: rgba(255, 255, 255, 0.75);
+  --border: rgba(120, 170, 220, 0.25);
+  --border-glow: rgba(91, 135, 212, 0.45);
+
+  --text: #3a5070;
+  --text-muted: #6a88aa;
+  --text-heading: #1e3a5c;
+  --white: #ffffff;
+
+  --shadow-sm: 0 2px 8px rgba(80, 130, 200, 0.12);
+  --shadow-md: 0 8px 32px rgba(80, 130, 200, 0.18);
+  --shadow-lg: 0 20px 60px rgba(80, 130, 200, 0.25);
+  --shadow-glow: 0 0 40px rgba(91, 135, 212, 0.2);
+
+  color-scheme: light;
+}
+
+/* ─── Body background transitions ─── */
+body {
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+[data-theme="light"] body,
+[data-theme="light"] {
+  background: linear-gradient(160deg, #c8ddf8 0%, #d8ecff 40%, #e8f4ff 100%);
 }
 
 /* ─── Reset & Base ─── */
