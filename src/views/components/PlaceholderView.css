@@ -1,0 +1,54 @@
+/* ============================================================
+   PLACEHOLDER VIEWS — Education, Projects, Hobbies, Contact
+   (Sẽ mở rộng chi tiết ở các tabs sau)
+   ============================================================ */
+
+.placeholder-page {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 60px;
+}
+
+.placeholder-inner {
+  max-width: 500px;
+  text-align: center;
+}
+
+.placeholder-icon {
+  font-size: 5rem;
+  display: block;
+  margin-bottom: 24px;
+  animation: hero-float 3s ease-in-out infinite;
+}
+
+.placeholder-title {
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  margin-bottom: 12px;
+}
+
+.placeholder-desc {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 32px;
+}
+
+.placeholder-back {
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Inter', sans-serif;
+}
+.placeholder-back:hover {
+  border-color: var(--primary);
+  color: var(--primary-light);
+  background: rgba(91,127,255,0.08);
+}
