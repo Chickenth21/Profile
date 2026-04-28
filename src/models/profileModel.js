@@ -7,7 +7,7 @@ export const profileData = {
   personal: {
     name: 'Nguyễn Văn A',
     tagline: 'Frontend Developer | UI Lover',
-    avatar: '/hero-avatar.png',
+    avatar: `${import.meta.env.BASE_URL}hero-avatar.png`,
     bio: 'Sinh viên CNTT đam mê xây dựng giao diện đẹp và trải nghiệm người dùng tốt. Luôn tìm kiếm những thách thức mới để phát triển bản thân.',
     location: 'Hà Nội, Việt Nam',
     email: 'nguyenvana@example.com',
