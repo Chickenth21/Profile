@@ -1,11 +1,11 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from "react";
 
 const SECTIONS = [
-  { id: 'hero',     label: 'Hero'       },
-  { id: 'intro',    label: 'Giới thiệu' },
-  { id: 'explore',  label: 'Khám phá'   },
-  { id: 'project',  label: 'Project'    },
-  { id: 'cta',      label: 'Liên hệ'   },
+  { id: "hero", label: "Hero" },
+  { id: "intro", label: "Giới thiệu" },
+  { id: "explore", label: "Khám phá" },
+  { id: "project", label: "Project" },
+  { id: "cta", label: "Liên hệ" },
 ];
 
 export default function HomePage({ controller }) {
@@ -18,7 +18,7 @@ export default function HomePage({ controller }) {
 
   const scrollToSection = useCallback((idx) => {
     const el = containerRef.current?.children[idx];
-    el?.scrollIntoView({ behavior: 'smooth' });
+    el?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   useEffect(() => {
@@ -29,13 +29,14 @@ export default function HomePage({ controller }) {
       const idx = Math.round(container.scrollTop / h);
       setActiveSection(Math.max(0, Math.min(idx, SECTIONS.length - 1)));
     };
-    container.addEventListener('scroll', onScroll, { passive: true });
-    return () => container.removeEventListener('scroll', onScroll);
+    container.addEventListener("scroll", onScroll, { passive: true });
+    return () => container.removeEventListener("scroll", onScroll);
   }, []);
 
   /* ── shared styles ── */
   const wrap = "max-w-[1100px] mx-auto px-4 md:px-8";
-  const card = "rounded-2xl border border-white/[0.07] bg-white/[0.03] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/20";
+  const card =
+    "rounded-2xl border border-white/[0.07] bg-white/[0.03] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/20";
 
   return (
     <>
@@ -79,14 +80,15 @@ export default function HomePage({ controller }) {
         .hide-scrollbar::-webkit-scrollbar { display: none; }
 
         /* ── Responsive scroll-snap ── */
+        /* Mobile: natural scroll, sections can grow */
         .snap-wrap {
           height: auto;
-          overflow-y: visible;
+          overflow-y: auto;
           overflow-x: hidden;
           scroll-snap-type: none;
         }
         .snap-sec {
-          min-height: calc(100svh - 64px);
+          min-height: 100svh;
           height: auto;
           scroll-snap-align: none;
           display: flex;
@@ -113,9 +115,10 @@ export default function HomePage({ controller }) {
       `}</style>
 
       {/* ── Dot navigator (desktop only) ── */}
-      <nav aria-label="Section navigation"
+      <nav
+        aria-label="Section navigation"
         className="fixed right-5 top-1/2 z-50 hidden md:flex flex-col gap-3"
-        style={{ transform: 'translateY(-50%)' }}
+        style={{ transform: "translateY(-50%)" }}
       >
         {SECTIONS.map((s, i) => (
           <button
@@ -126,14 +129,16 @@ export default function HomePage({ controller }) {
             style={{
               width: activeSection === i ? 10 : 6,
               height: activeSection === i ? 10 : 6,
-              borderRadius: '50%',
-              border: 'none',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              background: activeSection === i
-                ? 'linear-gradient(135deg,#6cbcff,#b388ff)'
-                : 'rgba(255,255,255,0.25)',
-              boxShadow: activeSection === i ? '0 0 8px rgba(108,188,255,0.6)' : 'none',
+              borderRadius: "50%",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              background:
+                activeSection === i
+                  ? "linear-gradient(135deg,#6cbcff,#b388ff)"
+                  : "rgba(255,255,255,0.25)",
+              boxShadow:
+                activeSection === i ? "0 0 8px rgba(108,188,255,0.6)" : "none",
               padding: 0,
             }}
           />
