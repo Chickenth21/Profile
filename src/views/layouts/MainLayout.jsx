@@ -27,7 +27,7 @@ export default function MainLayout({
   const { isDark, toggleTheme } = useTheme();
 
   return (
-    <div className="relative min-h-screen flex flex-col">
+    <div className="relative min-h-screen flex flex-col overflow-x-hidden">
       {/* Background */}
       <div className="animated-bg" aria-hidden="true">
         <div className="orb orb-1" />

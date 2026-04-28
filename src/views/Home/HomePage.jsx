@@ -34,7 +34,7 @@ export default function HomePage({ controller }) {
   }, []);
 
   /* ── shared styles ── */
-  const wrap = "max-w-[1100px] mx-auto px-8";
+  const wrap = "max-w-[1100px] mx-auto px-4 md:px-8";
   const card = "rounded-2xl border border-white/[0.07] bg-white/[0.03] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/20";
 
   return (
@@ -77,11 +77,45 @@ export default function HomePage({ controller }) {
         .font-sans-dm { font-family:'DM Sans',sans-serif }
         .hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
+
+        /* ── Responsive scroll-snap ── */
+        /* Mobile: natural scroll, sections can grow */
+        .snap-wrap {
+          height: auto;
+          overflow-y: auto;
+          overflow-x: hidden;
+          scroll-snap-type: none;
+        }
+        .snap-sec {
+          min-height: 100svh;
+          height: auto;
+          scroll-snap-align: none;
+          display: flex;
+          align-items: center;
+          position: relative;
+          overflow: hidden;
+        }
+
+        /* Desktop: full snap experience */
+        @media (min-width: 768px) {
+          .snap-wrap {
+            height: calc(100vh - 88px);
+            overflow-y: scroll;
+            overflow-x: hidden;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+          }
+          .snap-sec {
+            min-height: unset;
+            height: 100vh;
+            scroll-snap-align: start;
+          }
+        }
       `}</style>
 
-      {/* ── Dot navigator ── */}
+      {/* ── Dot navigator (desktop only) ── */}
       <nav aria-label="Section navigation"
-        className="fixed right-6 top-1/2 z-50 flex flex-col gap-3"
+        className="fixed right-5 top-1/2 z-50 hidden md:flex flex-col gap-3"
         style={{ transform: 'translateY(-50%)' }}
       >
         {SECTIONS.map((s, i) => (
@@ -107,22 +141,13 @@ export default function HomePage({ controller }) {
         ))}
       </nav>
 
-      {/* ── Scroll-snap container ── */}
+      {/* ── Scroll container ── */}
       <div
         ref={containerRef}
-        className="font-sans-dm text-white/80 hide-scrollbar"
-        style={{
-          height: 'calc(100vh - 80px)',
-          overflowY: 'scroll',
-          scrollSnapType: 'y mandatory',
-          scrollBehavior: 'smooth',
-        }}
+        className="font-sans-dm text-white/80 hide-scrollbar snap-wrap"
       >
         {/* ════ 1. HERO ════ */}
-        <section
-          style={{ scrollSnapAlign: 'start', height: '100vh' }}
-          className="relative flex items-center"
-        >
+        <section className="snap-sec">
           {/* bg blobs */}
           <div className="pglow pointer-events-none absolute -left-40 -top-24 h-[500px] w-[500px] rounded-full bg-cyan-400 blur-[100px] opacity-[0.06]" />
           <div
@@ -259,7 +284,7 @@ export default function HomePage({ controller }) {
         </section>
 
         {/* ════ 2. QUICK INTRO ════ */}
-        <section style={{ scrollSnapAlign: 'start', height: '100vh' }} className="relative flex items-center">
+        <section className="snap-sec py-8 md:py-0">
           <div className={`${wrap} w-full relative`}>
             <span className="sec-num">02</span>
 
@@ -365,7 +390,7 @@ export default function HomePage({ controller }) {
         </section>
 
         {/* ════ 3. HIGHLIGHT CARDS ════ */}
-        <section style={{ scrollSnapAlign: 'start', height: '100vh' }} className="relative flex items-center">
+        <section className="snap-sec py-8 md:py-0">
           <div className={`${wrap} w-full relative`}>
             <span className="sec-num">03</span>
 
@@ -421,7 +446,7 @@ export default function HomePage({ controller }) {
         </section>
 
         {/* ════ 4. FEATURED PROJECT ════ */}
-        <section style={{ scrollSnapAlign: 'start', height: '100vh' }} className="relative flex items-center">
+        <section className="snap-sec py-8 md:py-0">
           <div className={`${wrap} w-full relative`}>
             <span className="sec-num">04</span>
 
@@ -506,7 +531,7 @@ export default function HomePage({ controller }) {
         </section>
 
         {/* ════ 5. CTA ════ */}
-        <section style={{ scrollSnapAlign: 'start', height: '100vh' }} className="relative flex items-center justify-center">
+        <section className="snap-sec py-8 md:py-0 justify-center">
           <div className={`${wrap} w-full`}>
             <div
               className={`anim-rise d1 ${card} relative overflow-hidden rounded-3xl px-8 py-20 text-center`}
