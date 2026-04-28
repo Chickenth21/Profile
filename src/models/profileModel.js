@@ -5,14 +5,14 @@
 export const profileData = {
   // --- Thông tin cá nhân ---
   personal: {
-    name: "Nguyễn Văn A",
-    tagline: "Frontend Developer | UI Lover",
+    name: "Nguyễn Văn Sáng",
+    tagline: "Developer | Fullstack",
     avatar: `${import.meta.env.BASE_URL}avatar.jpg`,
     bio: "Sinh viên CNTT đam mê xây dựng giao diện đẹp và trải nghiệm người dùng tốt. Luôn tìm kiếm những thách thức mới để phát triển bản thân.",
-    location: "Hà Nội, Việt Nam",
-    email: "nguyenvana@example.com",
-    github: "https://github.com/nguyenvana",
-    linkedin: "https://linkedin.com/in/nguyenvana",
+    location: "Thái Thụy, Thái Bình, Việt Nam",
+    email: "sangnguyen2004th@gmail.com",
+    github: "https://github.com/Chickenth21",
+    Facebook: "https://www.facebook.com/sang.nguyen.591683",
   },
 
   // --- Học vấn ---
@@ -34,14 +34,13 @@ export const profileData = {
   hobbies: [
     { icon: "💻", label: "Coding" },
     { icon: "🎮", label: "Gaming" },
-    { icon: "🏋️", label: "Gym" },
     { icon: "🎵", label: "Âm nhạc" },
     { icon: "📚", label: "Đọc sách" },
   ],
 
   // --- Project nổi bật ---
   featuredProject: {
-    name: "RealERP System",
+    name: "RealERP",
     description:
       "Hệ thống quản lý bất động sản full-stack với React, Node.js và MongoDB. Tích hợp dashboard, báo cáo tài chính và quản lý hợp đồng.",
     tags: ["React", "Node.js", "MongoDB", "Express"],

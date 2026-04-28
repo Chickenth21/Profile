@@ -1,10 +1,17 @@
-import './Layout.css';
+import "./Layout.css";
 
 /**
  * VIEW LAYER — MainLayout
  * Wrapper bố cục chính: Navbar + Children + Background effects
  */
-export default function MainLayout({ children, profile, activeTab, onTabChange, isMenuOpen, onToggleMenu }) {
+export default function MainLayout({
+  children,
+  profile,
+  activeTab,
+  onTabChange,
+  isMenuOpen,
+  onToggleMenu,
+}) {
   return (
     <div className="app-layout">
       {/* ── Animated Background ── */}
@@ -20,11 +27,12 @@ export default function MainLayout({ children, profile, activeTab, onTabChange, 
       <nav className="navbar" role="navigation" aria-label="Main navigation">
         <button
           className="navbar-logo"
-          onClick={() => onTabChange('home')}
+          onClick={() => onTabChange("home")}
           aria-label="Về trang chủ"
         >
-          <div className="navbar-logo-icon">✦</div>
-          <span>{profile.personal.name.split(' ').pop()}</span>
+          <div className="navbar-logo-icon">
+            <img src={profile.personal.avatar} alt="avatar" />
+          </div>
         </button>
 
         {/* Desktop nav */}
@@ -34,9 +42,9 @@ export default function MainLayout({ children, profile, activeTab, onTabChange, 
               <button
                 role="menuitem"
                 id={`nav-${tab.id}`}
-                className={activeTab === tab.id ? 'active' : ''}
+                className={activeTab === tab.id ? "active" : ""}
                 onClick={() => onTabChange(tab.id)}
-                aria-current={activeTab === tab.id ? 'page' : undefined}
+                aria-current={activeTab === tab.id ? "page" : undefined}
               >
                 <span className="nav-icon">{tab.icon}</span>
                 {tab.label}
@@ -47,32 +55,44 @@ export default function MainLayout({ children, profile, activeTab, onTabChange, 
 
         {/* Actions */}
         <div className="navbar-actions">
-          <button className="btn-outline" onClick={() => onTabChange('contact')}>
+          <button
+            className="btn-outline"
+            onClick={() => onTabChange("contact")}
+          >
             Liên hệ
           </button>
-          <button className="btn-primary" onClick={() => onTabChange('projects')}>
+          <button
+            className="btn-primary"
+            onClick={() => onTabChange("projects")}
+          >
             Xem CV
           </button>
         </div>
 
         {/* Mobile hamburger */}
         <button
-          className={`hamburger${isMenuOpen ? ' open' : ''}`}
+          className={`hamburger${isMenuOpen ? " open" : ""}`}
           onClick={onToggleMenu}
-          aria-label={isMenuOpen ? 'Đóng menu' : 'Mở menu'}
+          aria-label={isMenuOpen ? "Đóng menu" : "Mở menu"}
           aria-expanded={isMenuOpen}
         >
-          <span /><span /><span />
+          <span />
+          <span />
+          <span />
         </button>
       </nav>
 
       {/* Mobile menu */}
-      <div className={`mobile-menu${isMenuOpen ? ' open' : ''}`} role="menu" aria-label="Mobile navigation">
+      <div
+        className={`mobile-menu${isMenuOpen ? " open" : ""}`}
+        role="menu"
+        aria-label="Mobile navigation"
+      >
         {profile.tabs.map((tab) => (
           <div key={tab.id} className="mobile-nav-item" role="none">
             <button
               role="menuitem"
-              className={activeTab === tab.id ? 'active' : ''}
+              className={activeTab === tab.id ? "active" : ""}
               onClick={() => onTabChange(tab.id)}
             >
               {tab.icon} {tab.label}

@@ -1,4 +1,4 @@
-import './Home.css';
+import "./Home.css";
 
 /**
  * VIEW LAYER — HomePage
@@ -26,19 +26,14 @@ export default function HomePage({ controller }) {
         <div className="hero-inner">
           {/* ── Text Left ── */}
           <div className="hero-text">
-            <div className="hero-badge animate-fade-up">
-              <span className="hero-badge-dot" />
-              Available for opportunities
-            </div>
-
             <h1 className="hero-name animate-fade-up delay-1" id="hero-name">
               {profile.personal.name}
             </h1>
 
             <p className="hero-tagline animate-fade-up delay-2">
-              <span className="gradient-text">Frontend Developer</span>
+              <span className="gradient-text">Developer</span>
               <span className="tagline-separator" />
-              <span style={{ color: 'var(--accent-light)' }}>UI Lover</span>
+              <span style={{ color: "var(--accent-light)" }}>Fullstack</span>
             </p>
 
             <p className="hero-bio animate-fade-up delay-3">
@@ -68,7 +63,7 @@ export default function HomePage({ controller }) {
               <button
                 id="hero-view-projects"
                 className="hero-btn-primary"
-                onClick={() => handleTabChange('projects')}
+                onClick={() => handleTabChange("projects")}
               >
                 Xem dự án
                 <span className="arrow-icon">→</span>
@@ -76,7 +71,7 @@ export default function HomePage({ controller }) {
               <button
                 id="hero-contact"
                 className="hero-btn-secondary"
-                onClick={() => handleTabChange('contact')}
+                onClick={() => handleTabChange("contact")}
               >
                 📬 Liên hệ với mình
               </button>
@@ -90,13 +85,22 @@ export default function HomePage({ controller }) {
             <div className="hero-glow" aria-hidden="true" />
 
             {/* Floating skill badges */}
-            <div className="hero-float-badge hero-float-badge-1" aria-hidden="true">
+            <div
+              className="hero-float-badge hero-float-badge-1"
+              aria-hidden="true"
+            >
               ⚛️ React Dev
             </div>
-            <div className="hero-float-badge hero-float-badge-2" aria-hidden="true">
+            <div
+              className="hero-float-badge hero-float-badge-2"
+              aria-hidden="true"
+            >
               🎨 UI Design
             </div>
-            <div className="hero-float-badge hero-float-badge-3" aria-hidden="true">
+            <div
+              className="hero-float-badge hero-float-badge-3"
+              aria-hidden="true"
+            >
               🔥 3.6 GPA
             </div>
 
@@ -122,7 +126,10 @@ export default function HomePage({ controller }) {
       {/* ══════════════════════════════
           2. QUICK INTRO
       ══════════════════════════════ */}
-      <section className="section-container" aria-labelledby="quick-intro-title">
+      <section
+        className="section-container"
+        aria-labelledby="quick-intro-title"
+      >
         <p className="section-label">About Me</p>
         <h2 className="section-title" id="quick-intro-title">
           Giới thiệu <span className="gradient-text">nhanh</span>
@@ -134,21 +141,23 @@ export default function HomePage({ controller }) {
             <div className="intro-card-header">
               <div
                 className="intro-card-icon"
-                style={{ background: 'rgba(91,127,255,0.12)' }}
+                style={{ background: "rgba(91,127,255,0.12)" }}
               >
                 👋
               </div>
               <p className="intro-card-title">Về mình</p>
             </div>
             <p className="intro-main-text">
-              Mình là <strong>{profile.personal.name}</strong>, sinh viên năm{' '}
-              <strong>3 ngành Công nghệ Thông tin</strong> tại{' '}
+              Mình là <strong>{profile.personal.name}</strong>, sinh viên năm{" "}
+              <strong>3 ngành Công nghệ Thông tin</strong> tại{" "}
               <strong>{profile.education.school}</strong>.
-              <br /><br />
-              Mình đang theo hướng <strong>Web Development</strong> với trọng tâm là
-              Frontend và trải nghiệm người dùng. Điều mình thích nhất là biến ý
-              tưởng thành giao diện đẹp và có chiều sâu.
-              <br /><br />
+              <br />
+              <br />
+              Mình đang theo hướng <strong>Web Development</strong> với trọng
+              tâm là Frontend và trải nghiệm người dùng. Điều mình thích nhất là
+              biến ý tưởng thành giao diện đẹp và có chiều sâu.
+              <br />
+              <br />
               Hiện tại mình đang học <strong>React, Node.js</strong> và xây dựng
               portfolio để chuẩn bị cho cơ hội thực tập.
             </p>
@@ -159,7 +168,7 @@ export default function HomePage({ controller }) {
             <div className="intro-card-header">
               <div
                 className="intro-card-icon"
-                style={{ background: 'rgba(168,85,247,0.12)' }}
+                style={{ background: "rgba(168,85,247,0.12)" }}
               >
                 ⚡
               </div>
@@ -204,7 +213,7 @@ export default function HomePage({ controller }) {
                 key={card.id}
                 id={`highlight-${card.id}`}
                 className={`highlight-card animate-fade-up delay-${i + 1}`}
-                style={{ '--card-color': card.color }}
+                style={{ "--card-color": card.color }}
                 onClick={() => handleTabChange(card.tab)}
                 onMouseEnter={() => handleCardHover(card.id)}
                 onMouseLeave={handleCardLeave}
@@ -226,7 +235,10 @@ export default function HomePage({ controller }) {
                 {/* Icon */}
                 <div
                   className="highlight-card-icon"
-                  style={{ background: `${card.color}1a`, border: `1px solid ${card.color}33` }}
+                  style={{
+                    background: `${card.color}1a`,
+                    border: `1px solid ${card.color}33`,
+                  }}
                 >
                   {card.icon}
                 </div>
@@ -254,7 +266,11 @@ export default function HomePage({ controller }) {
       <section className="featured-section" aria-labelledby="featured-title">
         <div className="featured-inner">
           <p className="section-label">Nổi bật</p>
-          <h2 className="section-title" id="featured-title" style={{ marginBottom: '32px' }}>
+          <h2
+            className="section-title"
+            id="featured-title"
+            style={{ marginBottom: "32px" }}
+          >
             Project <span className="gradient-text">tự hào nhất</span>
           </h2>
 
@@ -267,18 +283,22 @@ export default function HomePage({ controller }) {
                 {profile.featuredProject.name}
               </h3>
 
-              <p className="featured-desc">{profile.featuredProject.description}</p>
+              <p className="featured-desc">
+                {profile.featuredProject.description}
+              </p>
 
               <div className="featured-tags">
                 {profile.featuredProject.tags.map((tag) => (
-                  <span key={tag} className="featured-tag">{tag}</span>
+                  <span key={tag} className="featured-tag">
+                    {tag}
+                  </span>
                 ))}
               </div>
 
               <button
                 id="featured-view-project"
                 className="featured-link"
-                onClick={() => handleTabChange('projects')}
+                onClick={() => handleTabChange("projects")}
               >
                 Xem chi tiết
                 <span className="arrow-icon">→</span>
@@ -288,7 +308,9 @@ export default function HomePage({ controller }) {
             {/* Stats visual */}
             <div className="featured-visual" aria-hidden="true">
               <div className="featured-stat-card">
-                <span className="featured-stat-card-num">⭐{profile.featuredProject.stars}</span>
+                <span className="featured-stat-card-num">
+                  ⭐{profile.featuredProject.stars}
+                </span>
                 <span className="featured-stat-card-label">GitHub Stars</span>
               </div>
               <div className="featured-stat-card">
@@ -310,19 +332,21 @@ export default function HomePage({ controller }) {
       <section className="cta-section" aria-labelledby="cta-title">
         <div className="cta-inner">
           <div className="cta-card animate-fade-up">
-            <span className="cta-emoji" role="img" aria-label="rocket">🚀</span>
+            <span className="cta-emoji" role="img" aria-label="rocket">
+              🚀
+            </span>
             <h2 className="cta-title" id="cta-title">
               Muốn biết thêm về <span className="gradient-text">mình</span>?
             </h2>
             <p className="cta-desc">
-              Xem thêm về dự án, học vấn, sở thích của mình — hoặc liên hệ trực tiếp
-              để cùng nhau tạo ra điều gì đó thú vị!
+              Xem thêm về dự án, học vấn, sở thích của mình — hoặc liên hệ trực
+              tiếp để cùng nhau tạo ra điều gì đó thú vị!
             </p>
             <div className="cta-actions">
               <button
                 id="cta-about"
                 className="hero-btn-primary"
-                onClick={() => handleTabChange('education')}
+                onClick={() => handleTabChange("education")}
               >
                 Xem thêm về mình
                 <span className="arrow-icon">→</span>
@@ -330,7 +354,7 @@ export default function HomePage({ controller }) {
               <button
                 id="cta-contact"
                 className="hero-btn-secondary"
-                onClick={() => handleTabChange('contact')}
+                onClick={() => handleTabChange("contact")}
               >
                 📬 Liên hệ với mình
               </button>
