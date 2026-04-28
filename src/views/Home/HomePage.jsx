@@ -79,15 +79,14 @@ export default function HomePage({ controller }) {
         .hide-scrollbar::-webkit-scrollbar { display: none; }
 
         /* ── Responsive scroll-snap ── */
-        /* Mobile: natural scroll, sections can grow */
         .snap-wrap {
           height: auto;
-          overflow-y: auto;
+          overflow-y: visible;
           overflow-x: hidden;
           scroll-snap-type: none;
         }
         .snap-sec {
-          min-height: 100svh;
+          min-height: calc(100svh - 64px);
           height: auto;
           scroll-snap-align: none;
           display: flex;
