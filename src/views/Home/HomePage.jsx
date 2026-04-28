@@ -1,12 +1,41 @@
+import { useState, useRef, useEffect, useCallback } from 'react';
+
+const SECTIONS = [
+  { id: 'hero',     label: 'Hero'       },
+  { id: 'intro',    label: 'Giới thiệu' },
+  { id: 'explore',  label: 'Khám phá'   },
+  { id: 'project',  label: 'Project'    },
+  { id: 'cta',      label: 'Liên hệ'   },
+];
+
 export default function HomePage({ controller }) {
   const { profile, handleTabChange, getHighlightCards } = controller;
   const highlights = getHighlightCards();
 
-  /* ── shared class fragments ── */
-  const sec = "relative z-[1] px-6 py-6 md:py-8";
-  const wrap = "max-w-[1100px] mx-auto";
-  const card =
-    "rounded-2xl border border-white/[0.07] bg-white/[0.03] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/20 hover:shadow-[0_16px_48px_rgba(0,0,0,0.45)]";
+  // Scroll-snap: track active section
+  const containerRef = useRef(null);
+  const [activeSection, setActiveSection] = useState(0);
+
+  const scrollToSection = useCallback((idx) => {
+    const el = containerRef.current?.children[idx];
+    el?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const onScroll = () => {
+      const h = container.clientHeight;
+      const idx = Math.round(container.scrollTop / h);
+      setActiveSection(Math.max(0, Math.min(idx, SECTIONS.length - 1)));
+    };
+    container.addEventListener('scroll', onScroll, { passive: true });
+    return () => container.removeEventListener('scroll', onScroll);
+  }, []);
+
+  /* ── shared styles ── */
+  const wrap = "max-w-[1100px] mx-auto px-8";
+  const card = "rounded-2xl border border-white/[0.07] bg-white/[0.03] backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/20";
 
   return (
     <>
@@ -46,13 +75,54 @@ export default function HomePage({ controller }) {
         .font-display { font-family:'Playfair Display',Georgia,serif }
         .font-mono-dm { font-family:'DM Mono',monospace }
         .font-sans-dm { font-family:'DM Sans',sans-serif }
+        .hide-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
       `}</style>
 
-      <div className="font-sans-dm text-white/80">
-        {/* ════════════════════════════════════════
-            1. HERO
-        ════════════════════════════════════════ */}
-        <section className={`${sec} min-h-screen flex items-center`}>
+      {/* ── Dot navigator ── */}
+      <nav aria-label="Section navigation"
+        className="fixed right-6 top-1/2 z-50 flex flex-col gap-3"
+        style={{ transform: 'translateY(-50%)' }}
+      >
+        {SECTIONS.map((s, i) => (
+          <button
+            key={s.id}
+            onClick={() => scrollToSection(i)}
+            title={s.label}
+            aria-label={`Đến phần ${s.label}`}
+            style={{
+              width: activeSection === i ? 10 : 6,
+              height: activeSection === i ? 10 : 6,
+              borderRadius: '50%',
+              border: 'none',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              background: activeSection === i
+                ? 'linear-gradient(135deg,#6cbcff,#b388ff)'
+                : 'rgba(255,255,255,0.25)',
+              boxShadow: activeSection === i ? '0 0 8px rgba(108,188,255,0.6)' : 'none',
+              padding: 0,
+            }}
+          />
+        ))}
+      </nav>
+
+      {/* ── Scroll-snap container ── */}
+      <div
+        ref={containerRef}
+        className="font-sans-dm text-white/80 hide-scrollbar"
+        style={{
+          height: 'calc(100vh - 80px)',
+          overflowY: 'scroll',
+          scrollSnapType: 'y mandatory',
+          scrollBehavior: 'smooth',
+        }}
+      >
+        {/* ════ 1. HERO ════ */}
+        <section
+          style={{ scrollSnapAlign: 'start', height: '100vh' }}
+          className="relative flex items-center"
+        >
           {/* bg blobs */}
           <div className="pglow pointer-events-none absolute -left-40 -top-24 h-[500px] w-[500px] rounded-full bg-cyan-400 blur-[100px] opacity-[0.06]" />
           <div
@@ -188,11 +258,9 @@ export default function HomePage({ controller }) {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════
-            2. QUICK INTRO
-        ════════════════════════════════════════ */}
-        <section className={sec}>
-          <div className={`${wrap} relative`}>
+        {/* ════ 2. QUICK INTRO ════ */}
+        <section style={{ scrollSnapAlign: 'start', height: '100vh' }} className="relative flex items-center">
+          <div className={`${wrap} w-full relative`}>
             <span className="sec-num">02</span>
 
             <div className="mb-12">
@@ -296,11 +364,9 @@ export default function HomePage({ controller }) {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════
-            3. HIGHLIGHT CARDS
-        ════════════════════════════════════════ */}
-        <section className={sec}>
-          <div className={`${wrap} relative`}>
+        {/* ════ 3. HIGHLIGHT CARDS ════ */}
+        <section style={{ scrollSnapAlign: 'start', height: '100vh' }} className="relative flex items-center">
+          <div className={`${wrap} w-full relative`}>
             <span className="sec-num">03</span>
 
             <div className="mb-12">
@@ -354,8 +420,9 @@ export default function HomePage({ controller }) {
           </div>
         </section>
 
-        <section className={sec}>
-          <div className={`${wrap} relative`}>
+        {/* ════ 4. FEATURED PROJECT ════ */}
+        <section style={{ scrollSnapAlign: 'start', height: '100vh' }} className="relative flex items-center">
+          <div className={`${wrap} w-full relative`}>
             <span className="sec-num">04</span>
 
             <div className="mb-12">
@@ -438,11 +505,9 @@ export default function HomePage({ controller }) {
           </div>
         </section>
 
-        {/* ════════════════════════════════════════
-            5. CTA
-        ════════════════════════════════════════ */}
-        <section className={`${sec} pb-32`}>
-          <div className={wrap}>
+        {/* ════ 5. CTA ════ */}
+        <section style={{ scrollSnapAlign: 'start', height: '100vh' }} className="relative flex items-center justify-center">
+          <div className={`${wrap} w-full`}>
             <div
               className={`anim-rise d1 ${card} relative overflow-hidden rounded-3xl px-8 py-20 text-center`}
             >
