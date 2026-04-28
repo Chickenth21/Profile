@@ -359,9 +359,13 @@
    QUICK INTRO SECTION
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .section-container {
+  padding: 0 60px 80px;
+}
+
+.section-container > * {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 80px 60px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .section-label {

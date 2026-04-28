@@ -105,7 +105,74 @@ export default function MainLayout({
       <main className="main-content" id="main-content">
         {children}
       </main>
+
+      {/* Footer */}
+      <Footer profile={profile} onTabChange={onTabChange} />
     </div>
+  );
+}
+
+/** Footer component */
+function Footer({ profile, onTabChange }) {
+  const year = new Date().getFullYear();
+  return (
+    <footer className="site-footer">
+      <div className="footer-inner">
+        {/* Left — brand */}
+        <div className="footer-brand">
+          <button className="footer-logo" onClick={() => onTabChange('home')}>
+            <div className="footer-logo-icon">
+              <img src={profile.personal.avatar} alt="avatar" />
+            </div>
+            <span>{profile.personal.name}</span>
+          </button>
+          <p className="footer-tagline">{profile.personal.tagline}</p>
+          <p className="footer-location">📍 {profile.personal.location}</p>
+        </div>
+
+        {/* Center — nav links */}
+        <div className="footer-nav">
+          <p className="footer-nav-title">Điều hướng</p>
+          <ul>
+            {profile.tabs.map((tab) => (
+              <li key={tab.id}>
+                <button onClick={() => onTabChange(tab.id)}>
+                  {tab.icon} {tab.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Right — contact */}
+        <div className="footer-contact">
+          <p className="footer-nav-title">Liên hệ</p>
+          <ul>
+            <li>
+              <a href={`mailto:${profile.personal.email}`} target="_blank" rel="noreferrer">
+                ✉️ {profile.personal.email}
+              </a>
+            </li>
+            <li>
+              <a href={profile.personal.github} target="_blank" rel="noreferrer">
+                🐙 GitHub
+              </a>
+            </li>
+            {profile.personal.Facebook && (
+              <li>
+                <a href={profile.personal.Facebook} target="_blank" rel="noreferrer">
+                  💙 Facebook
+                </a>
+              </li>
+            )}
+          </ul>
+        </div>
+      </div>
+
+      <div className="footer-bottom">
+        <p>© {year} {profile.personal.name} — All rights reserved.</p>
+      </div>
+    </footer>
   );
 }
 

@@ -113,14 +113,6 @@ export default function HomePage({ controller }) {
             </div>
           </div>
         </div>
-
-        {/* Scroll indicator */}
-        <div className="hero-scroll-indicator" aria-hidden="true">
-          <div className="scroll-mouse">
-            <div className="scroll-wheel" />
-          </div>
-          <span>Cuộn xuống</span>
-        </div>
       </section>
 
       {/* ══════════════════════════════
@@ -130,7 +122,6 @@ export default function HomePage({ controller }) {
         className="section-container"
         aria-labelledby="quick-intro-title"
       >
-        <p className="section-label">About Me</p>
         <h2 className="section-title" id="quick-intro-title">
           Giới thiệu <span className="gradient-text">nhanh</span>
         </h2>
@@ -202,7 +193,6 @@ export default function HomePage({ controller }) {
       ══════════════════════════════ */}
       <section className="highlight-section" aria-labelledby="highlight-title">
         <div className="highlight-inner">
-          <p className="section-label">Quick Look</p>
           <h2 className="section-title" id="highlight-title">
             Khám phá <span className="gradient-text">thêm về mình</span>
           </h2>
@@ -265,7 +255,6 @@ export default function HomePage({ controller }) {
       ══════════════════════════════ */}
       <section className="featured-section" aria-labelledby="featured-title">
         <div className="featured-inner">
-          <p className="section-label">Nổi bật</p>
           <h2
             className="section-title"
             id="featured-title"
