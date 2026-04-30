@@ -13,6 +13,7 @@ export const profileData = {
     email: "sangnguyen2004th@gmail.com",
     github: "https://github.com/Chickenth21",
     Facebook: "https://www.facebook.com/sang.nguyen.591683",
+    Zalo: "0353484470",
   },
 
   // --- Học vấn ---

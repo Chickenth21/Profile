@@ -115,25 +115,24 @@ const SOCIAL = [
     border: "rgba(52,211,153,0.2)",
   },
   {
-    label: "Location",
-    handle: "Thái Bình, Việt Nam",
+    label: "Zalo",
+    handle: "0353 484 470",
     icon: (
-      <svg
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        width="22"
-        height="22"
-      >
-        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-        <circle cx="12" cy="10" r="3" />
+      <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+        <text
+          x="12" y="18"
+          fontSize="18"
+          fontWeight="900"
+          fontFamily="'Arial Black', Arial, sans-serif"
+          textAnchor="middle"
+        >
+          Z
+        </text>
       </svg>
     ),
-    color: "#fb923c",
-    bg: "rgba(251,146,60,0.1)",
-    border: "rgba(251,146,60,0.2)",
-    noLink: true,
+    color: "#0068ff",
+    bg: "rgba(0,104,255,0.1)",
+    border: "rgba(0,104,255,0.2)",
   },
 ];
 
@@ -153,6 +152,7 @@ export default function ContactPage({ profile }) {
     if (s.label === "GitHub") return profile.personal.github;
     if (s.label === "Facebook") return profile.personal.Facebook;
     if (s.label === "Email") return `mailto:${profile.personal.email}`;
+    if (s.label === "Zalo") return `https://zalo.me/${profile.personal.Zalo}`;
     return null;
   };
 
