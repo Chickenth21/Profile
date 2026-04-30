@@ -49,9 +49,9 @@ export default function MainLayout({
         role="navigation"
         aria-label="Main navigation"
       >
-        {/* inner wrapper: 3-column grid */}
+        {/* inner wrapper: flex on mobile, 3-column grid on desktop */}
         <div
-          className="h-full px-12 grid items-center"
+          className="h-full px-4 md:px-12 flex items-center justify-between md:grid"
           style={{ gridTemplateColumns: "1fr auto 1fr" }}
         >
           {/* LEFT — logo */}
@@ -198,7 +198,7 @@ export default function MainLayout({
             <button
               role="menuitem"
               onClick={() => onTabChange(tab.id)}
-              className="w-full px-5 py-3.5 rounded-2xl text-base font-medium text-left cursor-pointer transition-all duration-200 border flex items-center gap-2.5"
+              className="px-5 py-3.5 rounded-2xl text-base font-medium text-left cursor-pointer transition-all duration-200 border flex items-center gap-2.5 min-w-[180px]"
               style={{
                 fontFamily: "'Inter',sans-serif",
                 background:

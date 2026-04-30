@@ -8,6 +8,7 @@ import { useProfileController } from './controllers/profileController';
 import MainLayout from './views/layouts/MainLayout';
 import HomePage from './views/Home/HomePage';
 import PlaceholderView from './views/components/PlaceholderView';
+import ContactPage from './views/Contact/ContactPage';
 
 /* ── Keyframes injected once ── */
 const TRANSITION_STYLE = `
@@ -43,13 +44,14 @@ function AnimatedView({ activeTab, controller }) {
       case 'education':
       case 'projects':
       case 'hobbies':
-      case 'contact':
         return (
           <PlaceholderView
             tabId={tab}
             onBack={() => controller.handleTabChange('home')}
           />
         );
+      case 'contact':
+        return <ContactPage profile={controller.profile} />;
       default:
         return <HomePage controller={controller} />;
     }
