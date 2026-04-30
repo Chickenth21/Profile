@@ -98,7 +98,14 @@ const SOCIAL = [
     label: "Email",
     handle: "sangnguyen2004th@gmail.com",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="22" height="22">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        width="22"
+        height="22"
+      >
         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
         <polyline points="22,6 12,13 2,6" />
       </svg>
@@ -111,7 +118,14 @@ const SOCIAL = [
     label: "Location",
     handle: "Thái Bình, Việt Nam",
     icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="22" height="22">
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        width="22"
+        height="22"
+      >
         <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
         <circle cx="12" cy="10" r="3" />
       </svg>
@@ -152,21 +166,20 @@ export default function ContactPage({ profile }) {
       >
         {/* bg blobs */}
         <div className="c-glow pointer-events-none fixed -left-48 top-1/4 h-[500px] w-[500px] rounded-full bg-cyan-400 blur-[120px] opacity-[0.07]" />
-        <div className="c-glow pointer-events-none fixed -right-32 bottom-1/4 h-[400px] w-[400px] rounded-full bg-violet-400 blur-[120px] opacity-[0.07]" style={{ animationDelay: "2.5s" }} />
+        <div
+          className="c-glow pointer-events-none fixed -right-32 bottom-1/4 h-[400px] w-[400px] rounded-full bg-violet-400 blur-[120px] opacity-[0.07]"
+          style={{ animationDelay: "2.5s" }}
+        />
 
         <div className="mx-auto max-w-[1000px]">
-
           {/* ── Header ── */}
           <div className="c-rise c-d1 mb-12 text-center">
-            <p
-              className="mb-3 font-mono-dm text-[11px] uppercase tracking-[0.18em]"
-              style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
-            >
-              05 — Contact
-            </p>
             <h1
               className="font-display mb-4 text-[clamp(36px,5vw,60px)] font-black leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif", color: "var(--text-heading)" }}
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                color: "var(--text-heading)",
+              }}
             >
               Liên hệ với <span className="c-grad">mình</span>
             </h1>
@@ -174,7 +187,8 @@ export default function ContactPage({ profile }) {
               className="mx-auto max-w-[480px] text-[15px] leading-[1.85]"
               style={{ color: "var(--text-muted)" }}
             >
-              Mình luôn sẵn sàng kết nối — dù là về cơ hội thực tập, hợp tác dự án, hay chỉ đơn giản là một cuộc trò chuyện thú vị! 🚀
+              Mình luôn sẵn sàng kết nối — dù là về cơ hội thực tập, hợp tác dự
+              án, hay chỉ đơn giản là một cuộc trò chuyện thú vị! 🚀
             </p>
           </div>
 
@@ -195,7 +209,11 @@ export default function ContactPage({ profile }) {
                 >
                   <div
                     className="flex h-12 w-12 items-center justify-center rounded-2xl"
-                    style={{ background: s.bg, border: `1px solid ${s.border}`, color: s.color }}
+                    style={{
+                      background: s.bg,
+                      border: `1px solid ${s.border}`,
+                      color: s.color,
+                    }}
                   >
                     {s.icon}
                   </div>
@@ -208,7 +226,10 @@ export default function ContactPage({ profile }) {
                     </p>
                     <p
                       className="mt-0.5 text-[11px] leading-tight"
-                      style={{ color: "var(--text-muted)", wordBreak: "break-all" }}
+                      style={{
+                        color: "var(--text-muted)",
+                        wordBreak: "break-all",
+                      }}
                     >
                       {s.handle}
                     </p>
@@ -220,30 +241,41 @@ export default function ContactPage({ profile }) {
 
           {/* ── Main row: form + info ── */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-5">
-
             {/* Contact form (3/5) */}
             <div className="c-rise c-d3 c-card p-8 md:col-span-3">
               <div className="mb-6 flex items-center gap-3">
                 <div
                   className="flex h-10 w-10 items-center justify-center rounded-[14px] text-lg"
-                  style={{ background: "rgba(108,188,255,0.1)", border: "1px solid rgba(108,188,255,0.2)" }}
+                  style={{
+                    background: "rgba(108,188,255,0.1)",
+                    border: "1px solid rgba(108,188,255,0.2)",
+                  }}
                 >
                   ✉️
                 </div>
                 <div>
-                  <p className="text-[15px] font-semibold" style={{ color: "var(--text-heading)" }}>
+                  <p
+                    className="text-[15px] font-semibold"
+                    style={{ color: "var(--text-heading)" }}
+                  >
                     Gửi tin nhắn
                   </p>
                   <p
                     className="text-[11px] uppercase tracking-[0.1em]"
-                    style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                    style={{
+                      color: "var(--text-muted)",
+                      fontFamily: "'DM Mono', monospace",
+                    }}
                   >
                     Send a message
                   </p>
                 </div>
               </div>
 
-              <div className="mb-6 h-px" style={{ background: "var(--border)" }} />
+              <div
+                className="mb-6 h-px"
+                style={{ background: "var(--border)" }}
+              />
 
               <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -260,7 +292,9 @@ export default function ContactPage({ profile }) {
                       placeholder="Nguyễn Văn A"
                       required
                       value={form.name}
-                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      onChange={(e) =>
+                        setForm({ ...form, name: e.target.value })
+                      }
                     />
                   </div>
                   <div>
@@ -276,7 +310,9 @@ export default function ContactPage({ profile }) {
                       placeholder="you@example.com"
                       required
                       value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      onChange={(e) =>
+                        setForm({ ...form, email: e.target.value })
+                      }
                     />
                   </div>
                 </div>
@@ -294,7 +330,9 @@ export default function ContactPage({ profile }) {
                     placeholder="Xin chào! Mình muốn nói về..."
                     required
                     value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    onChange={(e) =>
+                      setForm({ ...form, message: e.target.value })
+                    }
                   />
                 </div>
 
@@ -315,16 +353,23 @@ export default function ContactPage({ profile }) {
                     opacity: status === "sending" ? 0.75 : 1,
                   }}
                 >
-                  {status === "idle" && <><span>Gửi tin nhắn</span> <span>→</span></>}
+                  {status === "idle" && (
+                    <>
+                      <span>Gửi tin nhắn</span> <span>→</span>
+                    </>
+                  )}
                   {status === "sending" && <span>Đang xử lý…</span>}
-                  {status === "sent" && <><span>✓</span> <span>Đã mở ứng dụng mail!</span></>}
+                  {status === "sent" && (
+                    <>
+                      <span>✓</span> <span>Đã mở ứng dụng mail!</span>
+                    </>
+                  )}
                 </button>
               </form>
             </div>
 
             {/* Info panel (2/5) */}
             <div className="c-rise c-d4 flex flex-col gap-4 md:col-span-2">
-
               {/* Availability */}
               <div className="c-card p-6">
                 <div className="mb-4 flex items-center gap-2.5">
@@ -332,12 +377,26 @@ export default function ContactPage({ profile }) {
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                     <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
                   </span>
-                  <span className="text-[13px] font-semibold" style={{ color: "var(--text-heading)" }}>
+                  <span
+                    className="text-[13px] font-semibold"
+                    style={{ color: "var(--text-heading)" }}
+                  >
                     Sẵn sàng hợp tác
                   </span>
                 </div>
-                <p className="text-[13px] leading-[1.75]" style={{ color: "var(--text-muted)" }}>
-                  Mình hiện đang tìm kiếm cơ hội <strong style={{ color: "var(--text-heading)" }}>thực tập Fullstack</strong> hoặc <strong style={{ color: "var(--text-heading)" }}>dự án freelance</strong>. Thời gian phản hồi thường &lt; 24h.
+                <p
+                  className="text-[13px] leading-[1.75]"
+                  style={{ color: "var(--text-muted)" }}
+                >
+                  Mình hiện đang tìm kiếm cơ hội{" "}
+                  <strong style={{ color: "var(--text-heading)" }}>
+                    thực tập Fullstack
+                  </strong>{" "}
+                  hoặc{" "}
+                  <strong style={{ color: "var(--text-heading)" }}>
+                    dự án freelance
+                  </strong>
+                  . Thời gian phản hồi thường &lt; 24h.
                 </p>
               </div>
 
@@ -345,23 +404,47 @@ export default function ContactPage({ profile }) {
               <div className="c-card p-6">
                 <p
                   className="mb-4 text-[11px] uppercase tracking-[0.12em] font-medium"
-                  style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                  style={{
+                    color: "var(--text-muted)",
+                    fontFamily: "'DM Mono', monospace",
+                  }}
                 >
                   Thông tin liên hệ
                 </p>
                 <div className="flex flex-col gap-4">
                   {[
-                    { icon: "📧", label: "Email", value: profile.personal.email, href: `mailto:${profile.personal.email}` },
-                    { icon: "🐙", label: "GitHub", value: "Chickenth21", href: profile.personal.github },
-                    { icon: "📍", label: "Địa chỉ", value: profile.personal.location },
-                    { icon: "🎓", label: "Trường", value: "FPT University HN" },
+                    {
+                      icon: "📧",
+                      label: "Email",
+                      value: profile.personal.email,
+                      href: `mailto:${profile.personal.email}`,
+                    },
+                    {
+                      icon: "🐙",
+                      label: "GitHub",
+                      value: "Chickenth21",
+                      href: profile.personal.github,
+                    },
+                    {
+                      icon: "📍",
+                      label: "Địa chỉ",
+                      value: profile.personal.location,
+                    },
+                    {
+                      icon: "🎓",
+                      label: "Trường",
+                      value: "FPT University Hà Nội",
+                    },
                   ].map((item) => (
                     <div key={item.label} className="flex items-start gap-3">
                       <span className="text-base">{item.icon}</span>
                       <div className="min-w-0 flex-1">
                         <p
                           className="text-[11px] uppercase tracking-[0.1em]"
-                          style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                          style={{
+                            color: "var(--text-muted)",
+                            fontFamily: "'DM Mono', monospace",
+                          }}
                         >
                           {item.label}
                         </p>
@@ -371,12 +454,18 @@ export default function ContactPage({ profile }) {
                             target="_blank"
                             rel="noopener noreferrer"
                             className="block truncate text-[13px] font-medium transition-colors hover:text-cyan-400"
-                            style={{ color: "var(--text-heading)", textDecoration: "none" }}
+                            style={{
+                              color: "var(--text-heading)",
+                              textDecoration: "none",
+                            }}
                           >
                             {item.value}
                           </a>
                         ) : (
-                          <p className="truncate text-[13px] font-medium" style={{ color: "var(--text-heading)" }}>
+                          <p
+                            className="truncate text-[13px] font-medium"
+                            style={{ color: "var(--text-heading)" }}
+                          >
                             {item.value}
                           </p>
                         )}
@@ -389,15 +478,24 @@ export default function ContactPage({ profile }) {
               {/* Quote */}
               <div
                 className="c-card c-float p-6 text-center"
-                style={{ background: "linear-gradient(135deg,rgba(108,188,255,0.06),rgba(179,136,255,0.06))" }}
+                style={{
+                  background:
+                    "linear-gradient(135deg,rgba(108,188,255,0.06),rgba(179,136,255,0.06))",
+                }}
               >
                 <p className="text-2xl mb-2">💡</p>
-                <p className="text-[13px] italic leading-[1.7]" style={{ color: "var(--text-muted)" }}>
+                <p
+                  className="text-[13px] italic leading-[1.7]"
+                  style={{ color: "var(--text-muted)" }}
+                >
                   "Code is like humor. When you have to explain it, it's bad."
                 </p>
                 <p
                   className="mt-2 text-[11px] font-medium"
-                  style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                  style={{
+                    color: "var(--text-muted)",
+                    fontFamily: "'DM Mono', monospace",
+                  }}
                 >
                   — Cory House
                 </p>
