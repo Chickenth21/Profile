@@ -9,6 +9,7 @@ import MainLayout from './views/layouts/MainLayout';
 import HomePage from './views/Home/HomePage';
 import PlaceholderView from './views/components/PlaceholderView';
 import ContactPage from './views/Contact/ContactPage';
+import EducationPage from './views/Education/EducationPage';
 
 /* ── Keyframes injected once ── */
 const TRANSITION_STYLE = `
@@ -42,6 +43,7 @@ function AnimatedView({ activeTab, controller }) {
       case 'home':
         return <HomePage controller={controller} />;
       case 'education':
+        return <EducationPage profile={controller.profile} />;
       case 'projects':
       case 'hobbies':
         return (

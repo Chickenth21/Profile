@@ -22,6 +22,19 @@ export const profileData = {
     major: "Công nghệ Thông tin",
     year: "2022 – 2026",
     gpa: "3.6 / 4.0",
+    primaryAndSecondary: {
+      school: "Trường TH&THCS Thái Hà",
+      year: "2010 – 2019",
+    },
+    highSchool: {
+      school: "Trường THPT Thái Phúc",
+      year: "2019 – 2022",
+      photos: [
+        { src: `${import.meta.env.BASE_URL}thpt-cong.webp`,  caption: "Cổng trường THPT Thái Phúc" },
+        { src: `${import.meta.env.BASE_URL}thpt-ho.webp`,    caption: "Hồ nước & hoa phượng đỏ" },
+        { src: `${import.meta.env.BASE_URL}thpt-san.webp`,   caption: "Sân trường & bóng rổ" },
+      ],
+    },
   },
 
   // --- Chuyên ngành & định hướng ---
