@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 
 const STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap');
@@ -999,58 +1000,60 @@ export default function EducationPage({ profile }) {
       </div>
 
       {/* ── Lightbox ── */}
-      {lightbox && (
-        <div className="e-lightbox" onClick={closeLightbox}>
-          <button
-            className="e-lightbox-close"
-            onClick={closeLightbox}
-            aria-label="Đóng"
-          >
-            ✕
-          </button>
+      {lightbox &&
+        createPortal(
+          <div className="e-lightbox" onClick={closeLightbox}>
+            <button
+              className="e-lightbox-close"
+              onClick={closeLightbox}
+              aria-label="Đóng"
+            >
+              ✕
+            </button>
 
-          {lightbox.photos.length > 1 && (
-            <>
-              <button
-                className="e-lightbox-nav e-lightbox-prev"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  prevPhoto();
-                }}
-                aria-label="Ảnh trước"
-              >
-                ‹
-              </button>
-              <button
-                className="e-lightbox-nav e-lightbox-next"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  nextPhoto();
-                }}
-                aria-label="Ảnh tiếp"
-              >
-                ›
-              </button>
-            </>
-          )}
-
-          <img
-            src={lightbox.photos[lightbox.index].src}
-            alt={lightbox.photos[lightbox.index].caption}
-            onClick={(e) => e.stopPropagation()}
-          />
-
-          <div className="e-lightbox-caption">
-            {lightbox.photos[lightbox.index].caption}
             {lightbox.photos.length > 1 && (
-              <span style={{ opacity: 0.6 }}>
-                {" "}
-                · {lightbox.index + 1}/{lightbox.photos.length}
-              </span>
+              <>
+                <button
+                  className="e-lightbox-nav e-lightbox-prev"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevPhoto();
+                  }}
+                  aria-label="Ảnh trước"
+                >
+                  ‹
+                </button>
+                <button
+                  className="e-lightbox-nav e-lightbox-next"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextPhoto();
+                  }}
+                  aria-label="Ảnh tiếp"
+                >
+                  ›
+                </button>
+              </>
             )}
-          </div>
-        </div>
-      )}
+
+            <img
+              src={lightbox.photos[lightbox.index].src}
+              alt={lightbox.photos[lightbox.index].caption}
+              onClick={(e) => e.stopPropagation()}
+            />
+
+            <div className="e-lightbox-caption">
+              {lightbox.photos[lightbox.index].caption}
+              {lightbox.photos.length > 1 && (
+                <span style={{ opacity: 0.6 }}>
+                  {" "}
+                  · {lightbox.index + 1}/{lightbox.photos.length}
+                </span>
+              )}
+            </div>
+          </div>,
+          document.body
+        )}
     </>
   );
 }
