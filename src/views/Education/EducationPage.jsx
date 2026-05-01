@@ -79,6 +79,28 @@ const STYLES = `
   }
   .e-photo:hover .e-photo-overlay { opacity: 1; }
 
+  /* FPT Banner */
+  .e-fpt-banner {
+    border-radius: 20px; overflow: hidden; position: relative;
+    height: 220px; cursor: pointer;
+    border: 1px solid rgba(255,165,0,0.2);
+  }
+  .e-fpt-banner img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .5s ease; }
+  .e-fpt-banner:hover img { transform: scale(1.04); }
+  .e-fpt-banner-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,100,0,0.55) 0%, rgba(0,0,0,0.35) 100%);
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 24px;
+  }
+
+  /* Highlight chips */
+  .e-highlight {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px 16px; border-radius: 14px;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  .e-highlight:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+
   /* Lightbox */
   .e-lightbox {
     position: fixed; inset: 0; z-index: 999;
@@ -117,15 +139,73 @@ const STYLES = `
   .e-lightbox-next { right: 20px; }
 `;
 
+const FPT_PHOTOS = [
+  {
+    src: `${import.meta.env.BASE_URL}san-fpt.jpg`,
+    caption: "Sân trường – xe điện & cây vàng rực",
+  },
+  {
+    src: `${import.meta.env.BASE_URL}the-thao-fpt.jpg`,
+    caption: "Khu thể thao – sân bóng rổ ngoài trời",
+  },
+  {
+    src: `${import.meta.env.BASE_URL}thu-vien-fpt.jpeg`,
+    caption: "Thư viện FPT – không gian học tập hiện đại",
+  },
+  {
+    src: `${import.meta.env.BASE_URL}tuong-fpt.jpg`,
+    caption: "Tượng Self-Made Man – biểu tượng nghị lực",
+  },
+];
+
+const FPT_HIGHLIGHTS = [
+  {
+    icon: "🏙️",
+    title: "Campus Hà Nội",
+    desc: "Toà nhà xanh hiện đại, thiết kế thoáng mát tại Khu CNC Hòa Lạc",
+    color: "#6cbcff",
+  },
+  {
+    icon: "📚",
+    title: "Thư viện đa tầng",
+    desc: "Kho tài nguyên phong phú, phòng đọc yên tĩnh & không gian nhóm",
+    color: "#b388ff",
+  },
+  {
+    icon: "⚽",
+    title: "Khu thể thao",
+    desc: "Sân bóng rổ, sân cầu lông, phòng gym đầy đủ tiện ích",
+    color: "#34d399",
+  },
+  {
+    icon: "🚌",
+    title: "Xe điện nội khu",
+    desc: "Di chuyển thuận tiện giữa các toà nhà bằng xe bus điện miễn phí",
+    color: "#fb923c",
+  },
+  {
+    icon: "💼",
+    title: "OJT – Thực tập thực tế",
+    desc: "Chương trình On-the-Job-Training bắt buộc 6 tháng tại doanh nghiệp",
+    color: "#f472b6",
+  },
+  {
+    icon: "🌐",
+    title: "Môi trường quốc tế",
+    desc: "Giảng dạy song ngữ, hợp tác với hàng trăm doanh nghiệp công nghệ",
+    color: "#fbbf24",
+  },
+];
+
 const TECH_STACK = [
-  { name: "React",       color: "#61dafb", icon: "⚛️" },
-  { name: "JavaScript",  color: "#f7df1e", icon: "📜" },
-  { name: "Node.js",     color: "#68a063", icon: "🟢" },
-  { name: "Java",        color: "#f89820", icon: "☕" },
-  { name: "UI/UX",       color: "#a855f7", icon: "🎨" },
-  { name: "MongoDB",     color: "#4db33d", icon: "🍃" },
-  { name: "Express.js",  color: "#888888", icon: "🚀" },
-  { name: "Git",         color: "#f05032", icon: "🐙" },
+  { name: "React", color: "#61dafb", icon: "⚛️" },
+  { name: "JavaScript", color: "#f7df1e", icon: "📜" },
+  { name: "Node.js", color: "#68a063", icon: "🟢" },
+  { name: "Java", color: "#f89820", icon: "☕" },
+  { name: "UI/UX", color: "#a855f7", icon: "🎨" },
+  { name: "MongoDB", color: "#4db33d", icon: "🍃" },
+  { name: "Express.js", color: "#888888", icon: "🚀" },
+  { name: "Git", color: "#f05032", icon: "🐙" },
 ];
 
 const TIMELINE = [
@@ -173,15 +253,20 @@ export default function EducationPage({ profile }) {
   const [lightbox, setLightbox] = useState(null); // { photos, index }
   const photos = education.highSchool?.photos || [];
 
-  const openLightbox = (index) => setLightbox({ photos, index });
+  const openLightbox = (photos, index) => setLightbox({ photos, index });
   const closeLightbox = () => setLightbox(null);
-  const prevPhoto = () => setLightbox((lb) => ({ ...lb, index: (lb.index - 1 + lb.photos.length) % lb.photos.length }));
-  const nextPhoto = () => setLightbox((lb) => ({ ...lb, index: (lb.index + 1) % lb.photos.length }));
+  const prevPhoto = () =>
+    setLightbox((lb) => ({
+      ...lb,
+      index: (lb.index - 1 + lb.photos.length) % lb.photos.length,
+    }));
+  const nextPhoto = () =>
+    setLightbox((lb) => ({ ...lb, index: (lb.index + 1) % lb.photos.length }));
   const stats = [
     { num: education.gpa, label: "GPA", sub: "/ 4.0 scale", color: "#6cbcff" },
-    { num: "3+",          label: "Năm học", sub: "tại FPT HN", color: "#b388ff" },
-    { num: "10+",         label: "Dự án", sub: "hoàn thành", color: "#34d399" },
-    { num: "Top 15%",     label: "Xếp hạng", sub: "trong khóa", color: "#fb923c" },
+    { num: "3+", label: "Năm học", sub: "tại FPT HN", color: "#b388ff" },
+    { num: "10+", label: "Dự án", sub: "hoàn thành", color: "#34d399" },
+    { num: "Top 15%", label: "Xếp hạng", sub: "trong khóa", color: "#fb923c" },
   ];
 
   return (
@@ -194,21 +279,29 @@ export default function EducationPage({ profile }) {
       >
         {/* bg blobs */}
         <div className="e-glow pointer-events-none fixed -left-48 top-1/4 h-[500px] w-[500px] rounded-full bg-cyan-400 blur-[120px] opacity-[0.07]" />
-        <div className="e-glow pointer-events-none fixed -right-32 bottom-1/4 h-[400px] w-[400px] rounded-full bg-violet-400 blur-[120px] opacity-[0.07]" style={{ animationDelay: "2.5s" }} />
+        <div
+          className="e-glow pointer-events-none fixed -right-32 bottom-1/4 h-[400px] w-[400px] rounded-full bg-violet-400 blur-[120px] opacity-[0.07]"
+          style={{ animationDelay: "2.5s" }}
+        />
 
         <div className="mx-auto max-w-[1000px]">
-
           {/* ── Header ── */}
           <div className="e-rise e-d1 mb-12 text-center">
             <p
               className="mb-3 text-[11px] uppercase tracking-[0.18em]"
-              style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+              style={{
+                color: "var(--text-muted)",
+                fontFamily: "'DM Mono', monospace",
+              }}
             >
               02 — Education
             </p>
             <h1
               className="mb-4 text-[clamp(36px,5vw,60px)] font-black leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif", color: "var(--text-heading)" }}
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                color: "var(--text-heading)",
+              }}
             >
               Học vấn &amp; <span className="e-grad">Kỹ năng</span>
             </h1>
@@ -216,7 +309,8 @@ export default function EducationPage({ profile }) {
               className="mx-auto max-w-[460px] text-[15px] leading-[1.85]"
               style={{ color: "var(--text-muted)" }}
             >
-              Hành trình học tập tại FPT University — nơi mình xây dựng nền tảng kỹ thuật vững chắc và đam mê với lập trình.
+              Hành trình học tập tại FPT University — nơi mình xây dựng nền tảng
+              kỹ thuật vững chắc và đam mê với lập trình.
             </p>
           </div>
 
@@ -234,10 +328,19 @@ export default function EducationPage({ profile }) {
                 >
                   {s.num}
                 </div>
-                <div className="text-[13px] font-semibold" style={{ color: "var(--text-heading)" }}>
+                <div
+                  className="text-[13px] font-semibold"
+                  style={{ color: "var(--text-heading)" }}
+                >
                   {s.label}
                 </div>
-                <div className="text-[11px] mt-0.5" style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}>
+                <div
+                  className="text-[11px] mt-0.5"
+                  style={{
+                    color: "var(--text-muted)",
+                    fontFamily: "'DM Mono', monospace",
+                  }}
+                >
                   {s.sub}
                 </div>
               </div>
@@ -246,53 +349,81 @@ export default function EducationPage({ profile }) {
 
           {/* ── Main: University card + Skills ── */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-5 mb-6">
-
             {/* University card (3/5) */}
             <div className="e-rise e-d3 e-card p-8 md:col-span-3">
               {/* header */}
               <div className="mb-6 flex items-center gap-4">
                 <div
                   className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl text-2xl"
-                  style={{ background: "rgba(108,188,255,0.1)", border: "1px solid rgba(108,188,255,0.2)" }}
+                  style={{
+                    background: "rgba(108,188,255,0.1)",
+                    border: "1px solid rgba(108,188,255,0.2)",
+                  }}
                 >
                   🎓
                 </div>
                 <div>
-                  <p className="text-[16px] font-bold" style={{ color: "var(--text-heading)" }}>
+                  <p
+                    className="text-[16px] font-bold"
+                    style={{ color: "var(--text-heading)" }}
+                  >
                     {education.school}
                   </p>
                   <p
                     className="text-[12px] uppercase tracking-[0.1em]"
-                    style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                    style={{
+                      color: "var(--text-muted)",
+                      fontFamily: "'DM Mono', monospace",
+                    }}
                   >
                     {education.major}
                   </p>
                 </div>
               </div>
 
-              <div className="mb-6 h-px" style={{ background: "var(--border)" }} />
+              <div
+                className="mb-6 h-px"
+                style={{ background: "var(--border)" }}
+              />
 
               {/* Info grid */}
               <div className="grid grid-cols-2 gap-4 mb-6">
                 {[
                   { label: "Niên khóa", value: education.year, icon: "📅" },
                   { label: "GPA", value: education.gpa, icon: "⭐" },
-                  { label: "Chuyên ngành", value: specialization.field, icon: "💡" },
-                  { label: "Định hướng", value: specialization.focus, icon: "🎯" },
+                  {
+                    label: "Chuyên ngành",
+                    value: specialization.field,
+                    icon: "💡",
+                  },
+                  {
+                    label: "Định hướng",
+                    value: specialization.focus,
+                    icon: "🎯",
+                  },
                 ].map((item) => (
                   <div
                     key={item.label}
                     className="rounded-xl p-4"
-                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}
+                    style={{
+                      background: "rgba(255,255,255,0.03)",
+                      border: "1px solid rgba(255,255,255,0.06)",
+                    }}
                   >
                     <p className="text-lg mb-1">{item.icon}</p>
                     <p
                       className="text-[11px] uppercase tracking-[0.1em] mb-1"
-                      style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                      style={{
+                        color: "var(--text-muted)",
+                        fontFamily: "'DM Mono', monospace",
+                      }}
                     >
                       {item.label}
                     </p>
-                    <p className="text-[14px] font-semibold" style={{ color: "var(--text-heading)" }}>
+                    <p
+                      className="text-[14px] font-semibold"
+                      style={{ color: "var(--text-heading)" }}
+                    >
                       {item.value}
                     </p>
                   </div>
@@ -303,7 +434,10 @@ export default function EducationPage({ profile }) {
               <div>
                 <p
                   className="mb-3 text-[11px] uppercase tracking-[0.12em]"
-                  style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                  style={{
+                    color: "var(--text-muted)",
+                    fontFamily: "'DM Mono', monospace",
+                  }}
                 >
                   Công nghệ đang học
                 </p>
@@ -324,37 +458,79 @@ export default function EducationPage({ profile }) {
                 </div>
               </div>
 
-              <div className="mt-6 h-px" style={{ background: "var(--border)" }} />
+              <div
+                className="mt-6 h-px"
+                style={{ background: "var(--border)" }}
+              />
 
               {/* School history */}
               <div className="mt-6">
                 <p
                   className="mb-4 text-[11px] uppercase tracking-[0.12em]"
-                  style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                  style={{
+                    color: "var(--text-muted)",
+                    fontFamily: "'DM Mono', monospace",
+                  }}
                 >
                   Hệ thống trường đã học
                 </p>
                 <div className="flex flex-col gap-3">
                   {[
-                    { icon: "🏫", level: "Tiểu học & THCS", school: education.primaryAndSecondary?.school, year: education.primaryAndSecondary?.year, color: "#6cbcff" },
-                    { icon: "🏛️", level: "Trung học Phổ thông", school: education.highSchool?.school, year: education.highSchool?.year, color: "#b388ff" },
-                    { icon: "🎓", level: "Đại học", school: education.school, year: education.year, color: "#34d399" },
+                    {
+                      icon: "🏫",
+                      level: "Tiểu học & THCS",
+                      school: education.primaryAndSecondary?.school,
+                      year: education.primaryAndSecondary?.year,
+                      color: "#6cbcff",
+                    },
+                    {
+                      icon: "🏛️",
+                      level: "Trung học Phổ thông",
+                      school: education.highSchool?.school,
+                      year: education.highSchool?.year,
+                      color: "#b388ff",
+                    },
+                    {
+                      icon: "🎓",
+                      level: "Đại học",
+                      school: education.school,
+                      year: education.year,
+                      color: "#34d399",
+                    },
                   ].map((s) => (
                     <div
                       key={s.level}
                       className="flex items-center gap-3 rounded-xl p-3"
-                      style={{ background: `${s.color}0a`, border: `1px solid ${s.color}22` }}
+                      style={{
+                        background: `${s.color}0a`,
+                        border: `1px solid ${s.color}22`,
+                      }}
                     >
                       <span className="text-xl flex-shrink-0">{s.icon}</span>
                       <div className="min-w-0 flex-1">
-                        <p className="text-[11px] uppercase tracking-[0.1em]" style={{ color: s.color, fontFamily: "'DM Mono', monospace" }}>
+                        <p
+                          className="text-[11px] uppercase tracking-[0.1em]"
+                          style={{
+                            color: s.color,
+                            fontFamily: "'DM Mono', monospace",
+                          }}
+                        >
                           {s.level}
                         </p>
-                        <p className="text-[13px] font-semibold truncate" style={{ color: "var(--text-heading)" }}>
+                        <p
+                          className="text-[13px] font-semibold truncate"
+                          style={{ color: "var(--text-heading)" }}
+                        >
                           {s.school}
                         </p>
                       </div>
-                      <span className="text-[11px] flex-shrink-0" style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}>
+                      <span
+                        className="text-[11px] flex-shrink-0"
+                        style={{
+                          color: "var(--text-muted)",
+                          fontFamily: "'DM Mono', monospace",
+                        }}
+                      >
                         {s.year}
                       </span>
                     </div>
@@ -368,35 +544,53 @@ export default function EducationPage({ profile }) {
               <div className="mb-6 flex items-center gap-3">
                 <div
                   className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[14px] text-lg"
-                  style={{ background: "rgba(179,136,255,0.1)", border: "1px solid rgba(179,136,255,0.2)" }}
+                  style={{
+                    background: "rgba(179,136,255,0.1)",
+                    border: "1px solid rgba(179,136,255,0.2)",
+                  }}
                 >
                   ⚡
                 </div>
                 <div>
-                  <p className="text-[15px] font-semibold" style={{ color: "var(--text-heading)" }}>
+                  <p
+                    className="text-[15px] font-semibold"
+                    style={{ color: "var(--text-heading)" }}
+                  >
                     Kỹ năng chính
                   </p>
                   <p
                     className="text-[11px] uppercase tracking-[0.1em]"
-                    style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                    style={{
+                      color: "var(--text-muted)",
+                      fontFamily: "'DM Mono', monospace",
+                    }}
                   >
                     Core Skills
                   </p>
                 </div>
               </div>
 
-              <div className="mb-6 h-px" style={{ background: "var(--border)" }} />
+              <div
+                className="mb-6 h-px"
+                style={{ background: "var(--border)" }}
+              />
 
               <div className="flex flex-col gap-5">
                 {skills.map((skill) => (
                   <div key={skill.name}>
                     <div className="mb-2 flex items-baseline justify-between">
-                      <span className="text-[13px] font-medium" style={{ color: "var(--text-heading)" }}>
+                      <span
+                        className="text-[13px] font-medium"
+                        style={{ color: "var(--text-heading)" }}
+                      >
                         {skill.name}
                       </span>
                       <span
                         className="text-[11px] font-bold"
-                        style={{ color: skill.color, fontFamily: "'DM Mono', monospace" }}
+                        style={{
+                          color: skill.color,
+                          fontFamily: "'DM Mono', monospace",
+                        }}
                       >
                         {skill.level}%
                       </span>
@@ -421,24 +615,36 @@ export default function EducationPage({ profile }) {
             <div className="mb-6 flex items-center gap-3">
               <div
                 className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[14px] text-lg"
-                style={{ background: "rgba(52,211,153,0.1)", border: "1px solid rgba(52,211,153,0.2)" }}
+                style={{
+                  background: "rgba(52,211,153,0.1)",
+                  border: "1px solid rgba(52,211,153,0.2)",
+                }}
               >
                 📅
               </div>
               <div>
-                <p className="text-[15px] font-semibold" style={{ color: "var(--text-heading)" }}>
+                <p
+                  className="text-[15px] font-semibold"
+                  style={{ color: "var(--text-heading)" }}
+                >
                   Hành trình học tập
                 </p>
                 <p
                   className="text-[11px] uppercase tracking-[0.1em]"
-                  style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                  style={{
+                    color: "var(--text-muted)",
+                    fontFamily: "'DM Mono', monospace",
+                  }}
                 >
                   Academic Timeline
                 </p>
               </div>
             </div>
 
-            <div className="mb-6 h-px" style={{ background: "var(--border)" }} />
+            <div
+              className="mb-6 h-px"
+              style={{ background: "var(--border)" }}
+            />
 
             <div className="flex flex-col gap-0">
               {TIMELINE.map((item, i) => (
@@ -453,7 +659,10 @@ export default function EducationPage({ profile }) {
                       }}
                     />
                     {i < TIMELINE.length - 1 && (
-                      <div className="e-timeline-line my-1 flex-1" style={{ minHeight: 32 }} />
+                      <div
+                        className="e-timeline-line my-1 flex-1"
+                        style={{ minHeight: 32 }}
+                      />
                     )}
                   </div>
 
@@ -472,7 +681,10 @@ export default function EducationPage({ profile }) {
                         {item.year}
                       </span>
                       {item.active && (
-                        <span className="flex items-center gap-1 text-[11px]" style={{ color: "#34d399" }}>
+                        <span
+                          className="flex items-center gap-1 text-[11px]"
+                          style={{ color: "#34d399" }}
+                        >
                           <span className="relative flex h-2 w-2">
                             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                             <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
@@ -481,10 +693,16 @@ export default function EducationPage({ profile }) {
                         </span>
                       )}
                     </div>
-                    <p className="text-[14px] font-semibold mb-1" style={{ color: "var(--text-heading)" }}>
+                    <p
+                      className="text-[14px] font-semibold mb-1"
+                      style={{ color: "var(--text-heading)" }}
+                    >
                       {item.title}
                     </p>
-                    <p className="text-[13px] leading-[1.75]" style={{ color: "var(--text-muted)" }}>
+                    <p
+                      className="text-[13px] leading-[1.75]"
+                      style={{ color: "var(--text-muted)" }}
+                    >
                       {item.desc}
                     </p>
                   </div>
@@ -498,24 +716,36 @@ export default function EducationPage({ profile }) {
             <div className="mb-6 flex items-center gap-3">
               <div
                 className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[14px] text-lg"
-                style={{ background: "rgba(251,146,60,0.1)", border: "1px solid rgba(251,146,60,0.2)" }}
+                style={{
+                  background: "rgba(251,146,60,0.1)",
+                  border: "1px solid rgba(251,146,60,0.2)",
+                }}
               >
                 🛠️
               </div>
               <div>
-                <p className="text-[15px] font-semibold" style={{ color: "var(--text-heading)" }}>
+                <p
+                  className="text-[15px] font-semibold"
+                  style={{ color: "var(--text-heading)" }}
+                >
                   Tech Stack
                 </p>
                 <p
                   className="text-[11px] uppercase tracking-[0.1em]"
-                  style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                  style={{
+                    color: "var(--text-muted)",
+                    fontFamily: "'DM Mono', monospace",
+                  }}
                 >
                   Technologies & Tools
                 </p>
               </div>
             </div>
 
-            <div className="mb-6 h-px" style={{ background: "var(--border)" }} />
+            <div
+              className="mb-6 h-px"
+              style={{ background: "var(--border)" }}
+            />
 
             <div className="grid grid-cols-4 gap-3 md:grid-cols-8">
               {TECH_STACK.map((tech) => (
@@ -541,7 +771,10 @@ export default function EducationPage({ profile }) {
                   <span className="text-xl">{tech.icon}</span>
                   <span
                     className="text-[10px] font-semibold leading-tight"
-                    style={{ color: tech.color, fontFamily: "'DM Mono', monospace" }}
+                    style={{
+                      color: tech.color,
+                      fontFamily: "'DM Mono', monospace",
+                    }}
                   >
                     {tech.name}
                   </span>
@@ -549,37 +782,202 @@ export default function EducationPage({ profile }) {
               ))}
             </div>
           </div>
+          {/* ── FPT University Detail Section ── */}
+          <div className="e-rise e-card p-0 mt-6 overflow-hidden">
+            {/* Banner */}
+            <div className="e-fpt-banner">
+              <img
+                src={`${import.meta.env.BASE_URL}banner-fpt.jpg`}
+                alt="Trường Đại học FPT Campus Hà Nội"
+              />
+            </div>
+
+            {/* Highlights Grid */}
+            <div className="p-8">
+              <div className="mb-5 flex items-center gap-3">
+                <div
+                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[14px] text-lg"
+                  style={{
+                    background: "rgba(251,146,60,0.12)",
+                    border: "1px solid rgba(251,146,60,0.25)",
+                  }}
+                >
+                  🏫
+                </div>
+                <div>
+                  <p
+                    className="text-[15px] font-semibold"
+                    style={{ color: "var(--text-heading)" }}
+                  >
+                    Về Đại học FPT Hà Nội
+                  </p>
+                  <p
+                    className="text-[11px] uppercase tracking-[0.1em]"
+                    style={{
+                      color: "var(--text-muted)",
+                      fontFamily: "'DM Mono', monospace",
+                    }}
+                  >
+                    FPT University · Est. 2006
+                  </p>
+                </div>
+              </div>
+
+              <div
+                className="mb-5 h-px"
+                style={{ background: "var(--border)" }}
+              />
+
+              <p
+                className="text-[14px] leading-[1.85] mb-6"
+                style={{ color: "var(--text-muted)" }}
+              >
+                Đại học FPT là trường đại học tư thục hàng đầu Việt Nam, trực
+                thuộc Tập đoàn FPT — doanh nghiệp công nghệ lớn nhất cả nước.
+                Với triết lý{" "}
+                <span style={{ color: "var(--text-heading)", fontWeight: 600 }}>
+                  "Thực học – Thực nghiệp"
+                </span>
+                , trường chú trọng đào tạo gắn với thực tiễn doanh nghiệp, trang
+                bị cho sinh viên không chỉ kiến thức chuyên môn mà còn kỹ năng
+                mềm, ngoại ngữ và tư duy khởi nghiệp.
+              </p>
+
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+                {FPT_HIGHLIGHTS.map((h) => (
+                  <div
+                    key={h.title}
+                    className="e-highlight"
+                    style={{
+                      background: `${h.color}0d`,
+                      border: `1px solid ${h.color}22`,
+                    }}
+                  >
+                    <span className="text-2xl flex-shrink-0 mt-0.5">
+                      {h.icon}
+                    </span>
+                    <div>
+                      <p
+                        className="text-[13px] font-semibold mb-0.5"
+                        style={{ color: h.color }}
+                      >
+                        {h.title}
+                      </p>
+                      <p
+                        className="text-[12px] leading-[1.6]"
+                        style={{ color: "var(--text-muted)" }}
+                      >
+                        {h.desc}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* ── FPT Photo Gallery ── */}
+          <div className="e-rise e-card p-8 mt-6">
+            <div className="mb-6 flex items-center gap-3">
+              <div
+                className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[14px] text-lg"
+                style={{
+                  background: "rgba(251,146,60,0.12)",
+                  border: "1px solid rgba(251,146,60,0.25)",
+                }}
+              >
+                📸
+              </div>
+              <div>
+                <p
+                  className="text-[15px] font-semibold"
+                  style={{ color: "var(--text-heading)" }}
+                >
+                  Khoảnh khắc tại FPT University
+                </p>
+                <p
+                  className="text-[11px] uppercase tracking-[0.1em]"
+                  style={{
+                    color: "var(--text-muted)",
+                    fontFamily: "'DM Mono', monospace",
+                  }}
+                >
+                  2022 – nay · Hòa Lạc, Hà Nội
+                </p>
+              </div>
+            </div>
+
+            <div
+              className="mb-6 h-px"
+              style={{ background: "var(--border)" }}
+            />
+
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+              {FPT_PHOTOS.map((photo, idx) => (
+                <div
+                  key={idx}
+                  className="e-photo"
+                  onClick={() => openLightbox(FPT_PHOTOS, idx)}
+                  role="button"
+                  aria-label={`Xem ảnh: ${photo.caption}`}
+                >
+                  <img src={photo.src} alt={photo.caption} loading="lazy" />
+                  <div className="e-photo-overlay">
+                    <span
+                      className="text-[12px] font-medium text-white"
+                      style={{ fontFamily: "'DM Sans', sans-serif" }}
+                    >
+                      🔍 {photo.caption}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* ── Photo Gallery — THPT Thái Phúc ── */}
           {photos.length > 0 && (
             <div className="e-rise e-card p-8 mt-6">
               <div className="mb-6 flex items-center gap-3">
                 <div
                   className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-[14px] text-lg"
-                  style={{ background: "rgba(179,136,255,0.1)", border: "1px solid rgba(179,136,255,0.2)" }}
+                  style={{
+                    background: "rgba(179,136,255,0.1)",
+                    border: "1px solid rgba(179,136,255,0.2)",
+                  }}
                 >
                   📸
                 </div>
                 <div>
-                  <p className="text-[15px] font-semibold" style={{ color: "var(--text-heading)" }}>
+                  <p
+                    className="text-[15px] font-semibold"
+                    style={{ color: "var(--text-heading)" }}
+                  >
                     Kỷ niệm trường THPT Thái Phúc
                   </p>
                   <p
                     className="text-[11px] uppercase tracking-[0.1em]"
-                    style={{ color: "var(--text-muted)", fontFamily: "'DM Mono', monospace" }}
+                    style={{
+                      color: "var(--text-muted)",
+                      fontFamily: "'DM Mono', monospace",
+                    }}
                   >
                     2019 – 2022 · Thái Phúc, Thái Bình
                   </p>
                 </div>
               </div>
 
-              <div className="mb-6 h-px" style={{ background: "var(--border)" }} />
+              <div
+                className="mb-6 h-px"
+                style={{ background: "var(--border)" }}
+              />
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
                 {photos.map((photo, idx) => (
                   <div
                     key={idx}
                     className="e-photo"
-                    onClick={() => openLightbox(idx)}
+                    onClick={() => openLightbox(photos, idx)}
                     role="button"
                     aria-label={`Xem ảnh: ${photo.caption}`}
                   >
@@ -597,27 +995,42 @@ export default function EducationPage({ profile }) {
               </div>
             </div>
           )}
-
         </div>
       </div>
 
       {/* ── Lightbox ── */}
       {lightbox && (
         <div className="e-lightbox" onClick={closeLightbox}>
-          <button className="e-lightbox-close" onClick={closeLightbox} aria-label="Đóng">✕</button>
+          <button
+            className="e-lightbox-close"
+            onClick={closeLightbox}
+            aria-label="Đóng"
+          >
+            ✕
+          </button>
 
           {lightbox.photos.length > 1 && (
             <>
               <button
                 className="e-lightbox-nav e-lightbox-prev"
-                onClick={(e) => { e.stopPropagation(); prevPhoto(); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prevPhoto();
+                }}
                 aria-label="Ảnh trước"
-              >‹</button>
+              >
+                ‹
+              </button>
               <button
                 className="e-lightbox-nav e-lightbox-next"
-                onClick={(e) => { e.stopPropagation(); nextPhoto(); }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  nextPhoto();
+                }}
                 aria-label="Ảnh tiếp"
-              >›</button>
+              >
+                ›
+              </button>
             </>
           )}
 
@@ -630,7 +1043,10 @@ export default function EducationPage({ profile }) {
           <div className="e-lightbox-caption">
             {lightbox.photos[lightbox.index].caption}
             {lightbox.photos.length > 1 && (
-              <span style={{ opacity: 0.6 }}> · {lightbox.index + 1}/{lightbox.photos.length}</span>
+              <span style={{ opacity: 0.6 }}>
+                {" "}
+                · {lightbox.index + 1}/{lightbox.photos.length}
+              </span>
             )}
           </div>
         </div>

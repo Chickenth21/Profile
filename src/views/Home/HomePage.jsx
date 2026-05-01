@@ -235,7 +235,7 @@ export default function HomePage({ controller }) {
                 {/* floating badges */}
                 {[
                   {
-                    text: "⚛️ React",
+                    text: "🎮 Gaming",
                     top: -20,
                     left: -40,
                     bottom: "auto",
@@ -243,7 +243,7 @@ export default function HomePage({ controller }) {
                     delay: "0s",
                   },
                   {
-                    text: "🎨 UI Design",
+                    text: "🎵 Âm nhạc",
                     top: "auto",
                     left: -28,
                     bottom: -4,
@@ -251,7 +251,7 @@ export default function HomePage({ controller }) {
                     delay: "0.9s",
                   },
                   {
-                    text: "🔥 3.6 GPA",
+                    text: "🌸 Anime",
                     top: 40,
                     left: "auto",
                     bottom: "auto",
