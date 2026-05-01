@@ -54,6 +54,24 @@ const DROPDOWN_STYLE = `
   .hobby-dd-dot {
     width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
   }
+  /* Mobile hobby sub-items */
+  .mobile-hobby-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 16px; border-radius: 14px;
+    border: 1px solid; cursor: pointer; font-size: 14px; font-weight: 500;
+    font-family: 'Inter', sans-serif; transition: all 0.2s ease;
+    background: transparent;
+  }
+  .mobile-hobby-item:hover { opacity: 0.8; transform: translateX(3px); }
+  /* Animate sub-menu */
+  .mobile-hobby-sub {
+    display: flex; flex-direction: column; gap: 6px;
+    padding: 8px 0 4px 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.22,0.68,0,1.2), opacity 0.25s ease;
+  }
+  .mobile-hobby-sub.closed { max-height: 0; opacity: 0; padding: 0; }
+  .mobile-hobby-sub.open   { max-height: 200px; opacity: 1; }
   /* pointer caret */
   .hobby-dropdown-menu::before {
     content: '';
@@ -149,6 +167,7 @@ export default function MainLayout({
   onToggleMenu,
 }) {
   const { isDark, toggleTheme } = useTheme();
+  const [hobbyOpen, setHobbyOpen] = useState(false);
 
   return (
     <div className="relative min-h-screen flex flex-col overflow-x-hidden">
@@ -308,26 +327,56 @@ export default function MainLayout({
       >
         {profile.tabs.map((tab) => (
           <div key={tab.id} role="none">
-            <button
-              role="menuitem"
-              onClick={() => onTabChange(tab.id)}
-              className="px-5 py-3.5 rounded-2xl text-base font-medium text-left cursor-pointer transition-all duration-200 border flex items-center gap-2.5 min-w-[180px]"
-              style={{
-                fontFamily: "'Inter',sans-serif",
-                background:
-                  activeTab === tab.id
-                    ? "rgba(91,127,255,0.1)"
-                    : "var(--surface)",
-                borderColor:
-                  activeTab === tab.id ? "var(--border-glow)" : "var(--border)",
-                color:
-                  activeTab === tab.id
-                    ? "var(--color-primary-light)"
-                    : "var(--text)",
-              }}
-            >
-              {tab.icon} {tab.label}
-            </button>
+            {tab.id === "hobbies" ? (
+              <div>
+                {/* Toggle button */}
+                <button
+                  className="px-5 py-3.5 rounded-2xl text-base font-medium text-left cursor-pointer transition-all duration-200 border flex items-center gap-2.5 min-w-[180px] w-full"
+                  style={{
+                    fontFamily: "'Inter',sans-serif",
+                    background: activeTab === "hobbies" ? "rgba(91,127,255,0.1)" : "var(--surface)",
+                    borderColor: activeTab === "hobbies" ? "var(--border-glow)" : "var(--border)",
+                    color: activeTab === "hobbies" ? "var(--color-primary-light)" : "var(--text)",
+                  }}
+                  onClick={() => setHobbyOpen((v) => !v)}
+                  aria-expanded={hobbyOpen}
+                >
+                  <span>❤️</span>
+                  <span style={{ flex: 1 }}>Sở thích</span>
+                  <span style={{ fontSize: 10, opacity: 0.5, transition: "transform 0.25s", transform: hobbyOpen ? "rotate(180deg)" : "rotate(0deg)" }}>▼</span>
+                </button>
+
+                {/* Sub-items */}
+                <div className={`mobile-hobby-sub${hobbyOpen ? " open" : " closed"}`}>
+                  {HOBBY_DROPDOWN.map((item) => (
+                    <button
+                      key={item.id}
+                      className="mobile-hobby-item"
+                      style={{ color: item.color, borderColor: `${item.color}35`, background: `${item.color}0d` }}
+                      onClick={() => { onTabChange("hobbies", item.id); setHobbyOpen(false); }}
+                    >
+                      <span style={{ width: 7, height: 7, borderRadius: "50%", background: item.color, flexShrink: 0, display: "inline-block" }} />
+                      <span style={{ fontSize: 16 }}>{item.icon}</span>
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <button
+                role="menuitem"
+                onClick={() => onTabChange(tab.id)}
+                className="px-5 py-3.5 rounded-2xl text-base font-medium text-left cursor-pointer transition-all duration-200 border flex items-center gap-2.5 min-w-[180px]"
+                style={{
+                  fontFamily: "'Inter',sans-serif",
+                  background: activeTab === tab.id ? "rgba(91,127,255,0.1)" : "var(--surface)",
+                  borderColor: activeTab === tab.id ? "var(--border-glow)" : "var(--border)",
+                  color: activeTab === tab.id ? "var(--color-primary-light)" : "var(--text)",
+                }}
+              >
+                {tab.icon} {tab.label}
+              </button>
+            )}
           </div>
         ))}
       </div>

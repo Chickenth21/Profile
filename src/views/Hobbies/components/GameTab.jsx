@@ -15,9 +15,29 @@ const GAME_DATA = {
   playstyle: ["Teamwork 🤝", "Competitive 🏅", "Story-driven 📖", "Chill farm 🌾"],
 };
 
+const GAME_STYLES = `
+  .h-card {
+    border-radius:20px; border:1px solid rgba(255,255,255,0.07);
+    background:rgba(255,255,255,0.03); backdrop-filter:blur(20px);
+    transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;
+  }
+  .h-card:hover { transform:translateY(-4px); border-color:rgba(108,188,255,0.2); box-shadow:0 16px 48px rgba(108,188,255,0.08); }
+  .h-bar { animation: h-bar 1.2s cubic-bezier(.4,0,.2,1) .3s both }
+  @keyframes h-bar { from{width:0} }
+  .h-tag {
+    display:inline-flex; align-items:center; gap:6px;
+    padding:5px 14px; border-radius:99px; font-size:12px; font-weight:500;
+  }
+  .h-skill-track { height:4px; border-radius:99px; background:rgba(255,255,255,0.06); overflow:hidden; }
+  [data-theme="light"] .h-card { background:rgba(255,255,255,0.62); border-color:rgba(91,135,212,0.18); }
+  [data-theme="light"] .h-card:hover { border-color:rgba(91,135,212,0.4); box-shadow:0 16px 48px rgba(91,135,212,0.12); }
+  [data-theme="light"] .h-skill-track { background:rgba(91,135,212,0.14); }
+`;
+
 export default function GameTab() {
   return (
     <div className="flex flex-col gap-6">
+      <style>{GAME_STYLES}</style>
       <p className="text-[14px] leading-[1.85]" style={{ color: "var(--text-muted)" }}>
         {GAME_DATA.desc}
       </p>
