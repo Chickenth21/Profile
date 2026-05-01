@@ -73,11 +73,11 @@ export const profileData = {
 
   // --- Skills nổi bật ---
   skills: [
-    { name: "React", level: 85, color: "#61dafb" },
-    { name: "JavaScript", level: 90, color: "#f7df1e" },
-    { name: "Node.js", level: 75, color: "#68a063" },
-    { name: "UI Design", level: 80, color: "#a855f7" },
-    { name: "Java", level: 70, color: "#f89820" },
+    { name: "React", level: 50, color: "#61dafb" },
+    { name: "JavaScript", level: 50, color: "#f7df1e" },
+    { name: "Node.js", level: 50, color: "#68a063" },
+    { name: "UI Design", level: 50, color: "#a855f7" },
+    { name: "Java", level: 50, color: "#f89820" },
   ],
 
   // --- Navigation tabs ---

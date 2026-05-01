@@ -10,6 +10,7 @@ import HomePage from './views/Home/HomePage';
 import PlaceholderView from './views/components/PlaceholderView';
 import ContactPage from './views/Contact/ContactPage';
 import EducationPage from './views/Education/EducationPage';
+import HobbiesPage from './views/Hobbies/HobbiesPage';
 
 /* ── Keyframes injected once ── */
 const TRANSITION_STYLE = `
@@ -45,13 +46,14 @@ function AnimatedView({ activeTab, controller }) {
       case 'education':
         return <EducationPage profile={controller.profile} />;
       case 'projects':
-      case 'hobbies':
         return (
           <PlaceholderView
             tabId={tab}
             onBack={() => controller.handleTabChange('home')}
           />
         );
+      case 'hobbies':
+        return <HobbiesPage />;
       case 'contact':
         return <ContactPage profile={controller.profile} />;
       default:
