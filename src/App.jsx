@@ -20,7 +20,7 @@ const TRANSITION_STYLE = `
   .page-exit  { animation: page-out 0.22s cubic-bezier(0.4,0,1,1) both; pointer-events:none; }
 `;
 
-function AnimatedView({ activeTab, controller }) {
+function AnimatedView({ activeTab, hobbySubTab, controller }) {
   const [displayTab, setDisplayTab] = useState(activeTab);
   const [phase, setPhase] = useState('enter'); // 'enter' | 'exit'
   const prevTab = useRef(activeTab);
@@ -53,7 +53,7 @@ function AnimatedView({ activeTab, controller }) {
           />
         );
       case 'hobbies':
-        return <HobbiesPage />;
+        return <HobbiesPage initialTab={hobbySubTab} />;
       case 'contact':
         return <ContactPage profile={controller.profile} />;
       default:
@@ -74,6 +74,12 @@ function AnimatedView({ activeTab, controller }) {
 function App() {
   const controller = useProfileController();
   const { activeTab, profile, isMenuOpen, handleTabChange, toggleMenu } = controller;
+  const [hobbySubTab, setHobbySubTab] = useState("music");
+
+  const handleNavChange = (tab, subTab) => {
+    if (subTab) setHobbySubTab(subTab);
+    handleTabChange(tab);
+  };
 
   return (
     <>
@@ -81,11 +87,11 @@ function App() {
       <MainLayout
         profile={profile}
         activeTab={activeTab}
-        onTabChange={handleTabChange}
+        onTabChange={handleNavChange}
         isMenuOpen={isMenuOpen}
         onToggleMenu={toggleMenu}
       >
-        <AnimatedView activeTab={activeTab} controller={controller} />
+        <AnimatedView activeTab={activeTab} hobbySubTab={hobbySubTab} controller={controller} />
       </MainLayout>
     </>
   );
