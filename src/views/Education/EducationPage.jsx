@@ -237,7 +237,7 @@ const TIMELINE = [
   {
     year: "2024",
     title: "Fullstack & Dự án thực tế",
-    desc: "Phát triển RealERP — hệ thống quản lý bất động sản với React, Node.js, MongoDB. GPA đạt 3.6/4.0.",
+    desc: "Phát triển RealERP — hệ thống quản lý bất động sản với React, Node.js, MongoDB. GPA đạt 0/4.0.",
     color: "#fb923c",
   },
   {
@@ -264,10 +264,15 @@ export default function EducationPage({ profile }) {
   const nextPhoto = () =>
     setLightbox((lb) => ({ ...lb, index: (lb.index + 1) % lb.photos.length }));
   const stats = [
-    { num: education.gpa, label: "GPA", sub: "/ 4.0 scale", color: "#6cbcff" },
+    { num: education.gpa, label: "GPA", sub: "Dốt", color: "#6cbcff" },
     { num: "3+", label: "Năm học", sub: "tại FPT HN", color: "#b388ff" },
     { num: "10+", label: "Dự án", sub: "hoàn thành", color: "#34d399" },
-    { num: "Top 15%", label: "Xếp hạng", sub: "trong khóa", color: "#fb923c" },
+    {
+      num: "Top 1",
+      label: "Xếp hạng",
+      sub: "ăn hại trong khóa",
+      color: "#fb923c",
+    },
   ];
 
   return (
@@ -1052,7 +1057,7 @@ export default function EducationPage({ profile }) {
               )}
             </div>
           </div>,
-          document.body
+          document.body,
         )}
     </>
   );

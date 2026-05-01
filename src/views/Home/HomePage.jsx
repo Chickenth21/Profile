@@ -189,7 +189,7 @@ export default function HomePage({ controller }) {
                   {[
                     { num: "3+", label: "Năm học" },
                     { num: "10+", label: "Dự án" },
-                    { num: "3.6", label: "GPA" },
+                    { num: "0", label: "GPA" },
                   ].map((s, i) => (
                     <div key={i} className="flex items-center">
                       {i > 0 && (
