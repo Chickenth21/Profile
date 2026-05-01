@@ -1,12 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from "react";
-
-const SECTIONS = [
-  { id: "hero", label: "Hero" },
-  { id: "intro", label: "Giới thiệu" },
-  { id: "explore", label: "Khám phá" },
-  { id: "project", label: "Project" },
-  { id: "cta", label: "Liên hệ" },
-];
+import { HOME_SECTIONS, HERO_STATS, HERO_BADGES, PROJECT_STATS } from "../../utils/constant";
 
 export default function HomePage({ controller }) {
   const { profile, handleTabChange, getHighlightCards } = controller;
@@ -27,7 +20,7 @@ export default function HomePage({ controller }) {
     const onScroll = () => {
       const h = container.clientHeight;
       const idx = Math.round(container.scrollTop / h);
-      setActiveSection(Math.max(0, Math.min(idx, SECTIONS.length - 1)));
+      setActiveSection(Math.max(0, Math.min(idx, HOME_SECTIONS.length - 1)));
     };
     container.addEventListener("scroll", onScroll, { passive: true });
     return () => container.removeEventListener("scroll", onScroll);
@@ -120,7 +113,7 @@ export default function HomePage({ controller }) {
         className="fixed right-5 top-1/2 z-50 hidden md:flex flex-col gap-3"
         style={{ transform: "translateY(-50%)" }}
       >
-        {SECTIONS.map((s, i) => (
+        {HOME_SECTIONS.map((s, i) => (
           <button
             key={s.id}
             onClick={() => scrollToSection(i)}
@@ -186,11 +179,7 @@ export default function HomePage({ controller }) {
 
                 {/* stats */}
                 <div className="anim-rise d4 mt-1 flex items-center">
-                  {[
-                    { num: "3+", label: "Năm học" },
-                    { num: "10+", label: "Dự án" },
-                    { num: "0", label: "GPA" },
-                  ].map((s, i) => (
+                  {HERO_STATS.map((s, i) => (
                     <div key={i} className="flex items-center">
                       {i > 0 && (
                         <div className="mx-7 h-11 w-px bg-white/[0.08]" />
@@ -233,32 +222,7 @@ export default function HomePage({ controller }) {
                 <div className="pointer-events-none absolute h-44 w-44 rounded-full bg-cyan-400 blur-[60px] opacity-[0.10]" />
 
                 {/* floating badges */}
-                {[
-                  {
-                    text: "🎮 Gaming",
-                    top: -20,
-                    left: -40,
-                    bottom: "auto",
-                    right: "auto",
-                    delay: "0s",
-                  },
-                  {
-                    text: "🎵 Âm nhạc",
-                    top: "auto",
-                    left: -28,
-                    bottom: -4,
-                    right: "auto",
-                    delay: "0.9s",
-                  },
-                  {
-                    text: "🌸 Anime",
-                    top: 40,
-                    left: "auto",
-                    bottom: "auto",
-                    right: -52,
-                    delay: "1.7s",
-                  },
-                ].map((b, i) => (
+                {HERO_BADGES.map((b, i) => (
                   <div
                     key={i}
                     className="drift absolute whitespace-nowrap rounded-full border border-cyan-400/20 bg-white/[0.06] px-3.5 py-1.5 font-sans-dm text-[12px] font-semibold text-white backdrop-blur-sm"
@@ -508,14 +472,10 @@ export default function HomePage({ controller }) {
 
                 {/* Stats */}
                 <div className="flex flex-row gap-3 md:w-36 md:flex-col">
-                  {[
-                    {
-                      num: `⭐ ${profile.featuredProject?.stars}`,
-                      label: "GitHub Stars",
-                    },
-                    { num: "Fullstack", label: "Project Type" },
-                    { num: "4 Tech", label: "Technologies" },
-                  ].map((s) => (
+                  {PROJECT_STATS.map((s) => ({
+                    ...s,
+                    num: s.label === "GitHub Stars" ? `⭐ ${profile.featuredProject?.stars}` : s.num,
+                  })).map((s) => (
                     <div
                       key={s.label}
                       className="flex-1 rounded-2xl border border-white/[0.06] bg-white/[0.03] p-4 text-center"

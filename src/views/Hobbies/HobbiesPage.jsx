@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { createPortal } from "react-dom";
+import { HOBBY_TABS } from "../../utils/constant";
+import MusicTab from "./components/MusicTab";
+import AnimeTab from "./components/AnimeTab";
+import GameTab from "./components/GameTab";
 
 const STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap');
@@ -49,246 +52,13 @@ const STYLES = `
   [data-theme="light"] .h-card:hover { border-color:rgba(91,135,212,0.4); box-shadow:0 16px 48px rgba(91,135,212,0.12); }
   [data-theme="light"] .h-skill-track { background:rgba(91,135,212,0.14); }
   [data-theme="light"] .h-sub-btn.inactive { background:rgba(255,255,255,0.5); border-color:rgba(91,135,212,0.2); }
-
-  .h-lb {
-    position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.93); backdrop-filter:blur(14px);
-    display:flex; align-items:center; justify-content:center; padding:24px;
-    animation:h-rise .2s ease both;
-  }
-  .h-lb img { max-width:88vw; max-height:82vh; border-radius:14px; object-fit:contain; box-shadow:0 24px 80px rgba(0,0,0,0.6); }
-  .h-lb-close {
-    position:absolute; top:18px; right:22px; background:rgba(255,255,255,0.1);
-    border:1px solid rgba(255,255,255,0.2); color:#fff; border-radius:50%;
-    width:38px; height:38px; cursor:pointer; font-size:16px;
-    display:flex; align-items:center; justify-content:center; transition:background .2s;
-  }
-  .h-lb-close:hover { background:rgba(255,255,255,0.22); }
-  .h-lb-caption {
-    position:absolute; bottom:20px; left:50%; transform:translateX(-50%);
-    background:rgba(0,0,0,0.6); color:#fff; border-radius:99px;
-    padding:5px 16px; font-size:13px; white-space:nowrap; border:1px solid rgba(255,255,255,0.1);
-  }
 `;
 
-/* ── DATA ── */
-const MUSIC_DATA = {
-  desc: "Âm nhạc là người bạn đồng hành mỗi ngày — từ những buổi code đến lúc thư giãn. Tôi yêu thích nhiều thể loại nhưng đặc biệt mê nhạc Việt và chill beats.",
-  genres: [
-    { name: "V-Pop", pct: 70, color: "#f472b6", icon: "🇻🇳" },
-    { name: "Lo-fi / Chill", pct: 80, color: "#a855f7", icon: "☕" },
-    { name: "OST / Nhạc phim", pct: 60, color: "#e879f9", icon: "🎬" },
-    { name: "Acoustic", pct: 55, color: "#c084fc", icon: "🎸" },
-  ],
-  favorites: [
-    { title: "Chúng Ta Của Hiện Tại", artist: "Sơn Tùng M-TP", mood: "🌊 Sâu lắng" },
-    { title: "Có Chắc Yêu Là Đây", artist: "Sơn Tùng M-TP", mood: "🔥 Sôi động" },
-    { title: "Waiting for You", artist: "MONO", mood: "🌙 Tâm trạng" },
-    { title: "Nàng Thơ", artist: "Hoàng Dũng", mood: "🌸 Nhẹ nhàng" },
-    { title: "Em Của Ngày Hôm Qua", artist: "Sơn Tùng M-TP", mood: "💫 Hoài niệm" },
-    { title: "Ở Đây Thôi", artist: "Vũ.", mood: "🎵 Acoustic" },
-  ],
-  moods: ["Code session 💻", "Lúc buồn 🌧️", "Trước khi ngủ 🌙", "Sáng sớm ☀️"],
-};
 
-const ANIME_DATA = {
-  desc: "Anime không chỉ là hoạt hình — đó là nghệ thuật kể chuyện đỉnh cao. Mỗi series là một thế giới mới, mỗi nhân vật là một bài học về cuộc sống.",
-  watching: [
-    { title: "Jujutsu Kaisen", genre: "Action / Shounen", rating: 9.5, status: "Đang xem", color: "#f43f5e", ep: "47 ep" },
-    { title: "Attack on Titan", genre: "Action / Drama", rating: 9.9, status: "Đã xem", color: "#fb923c", ep: "87 ep" },
-    { title: "Demon Slayer", genre: "Action / Fantasy", rating: 9.3, status: "Đã xem", color: "#e879f9", ep: "55 ep" },
-    { title: "Vinland Saga", genre: "Historical / Drama", rating: 9.2, status: "Đã xem", color: "#34d399", ep: "48 ep" },
-    { title: "One Piece", genre: "Adventure / Shounen", rating: 9.0, status: "Đang xem", color: "#fbbf24", ep: "1100+ ep" },
-    { title: "Steins;Gate", genre: "Sci-fi / Thriller", rating: 9.8, status: "Đã xem", color: "#60a5fa", ep: "24 ep" },
-  ],
-  tags: ["Action 🗡️", "Fantasy 🔮", "Drama 🎭", "Sci-fi 🚀", "Shounen 💪", "Thriller 😱"],
-};
-
-const GAME_DATA = {
-  desc: "Gaming là cách tôi giải tỏa stress và rèn luyện tư duy chiến thuật. Từ những trận đấu căng thẳng đến khám phá thế giới mở rộng lớn.",
-  genres: [
-    { name: "MOBA", pct: 85, color: "#34d399", icon: "🏆" },
-    { name: "FPS / TPS", pct: 65, color: "#3b82f6", icon: "🎯" },
-    { name: "Open World / RPG", pct: 75, color: "#a855f7", icon: "🗺️" },
-    { name: "Strategy", pct: 55, color: "#fbbf24", icon: "♟️" },
-  ],
-  favorites: [
-    { name: "Liên Quân Mobile", role: "Main Hero: Thủ Thành", hrs: "1000+ giờ", color: "#34d399", icon: "⚔️" },
-    { name: "Genshin Impact", role: "Khám phá & Lore", hrs: "500+ giờ", color: "#60a5fa", icon: "🌍" },
-    { name: "Valorant", role: "Duelist / Controller", hrs: "300+ giờ", color: "#f43f5e", icon: "🔫" },
-    { name: "Minecraft", role: "Creative & Survival", hrs: "800+ giờ", color: "#78c850", icon: "⛏️" },
-  ],
-  playstyle: ["Teamwork 🤝", "Competitive 🏅", "Story-driven 📖", "Chill farm 🌾"],
-};
-
-/* ── Sub-components ── */
-function MusicTab() {
-  return (
-    <div className="flex flex-col gap-6">
-      <p className="text-[14px] leading-[1.85]" style={{ color: "var(--text-muted)" }}>
-        {MUSIC_DATA.desc}
-      </p>
-
-      {/* Genre bars */}
-      <div className="h-card p-6">
-        <p className="mb-4 text-[11px] uppercase tracking-[0.14em] font-semibold" style={{ color: "var(--text-muted)", fontFamily: "'DM Mono',monospace" }}>
-          Thể loại yêu thích
-        </p>
-        <div className="flex flex-col gap-4">
-          {MUSIC_DATA.genres.map((g) => (
-            <div key={g.name}>
-              <div className="flex justify-between mb-1.5 items-center">
-                <span className="text-[13px] font-medium flex items-center gap-2" style={{ color: "var(--text-heading)" }}>
-                  <span>{g.icon}</span>{g.name}
-                </span>
-                <span className="text-[11px] font-bold" style={{ color: g.color, fontFamily: "'DM Mono',monospace" }}>{g.pct}%</span>
-              </div>
-              <div className="h-skill-track">
-                <div className="h-bar h-full rounded-full" style={{ width: `${g.pct}%`, background: `linear-gradient(90deg,${g.color}55,${g.color})` }} />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Favorites grid */}
-      <div className="h-card p-6">
-        <p className="mb-4 text-[11px] uppercase tracking-[0.14em] font-semibold" style={{ color: "var(--text-muted)", fontFamily: "'DM Mono',monospace" }}>
-          Bài hát / Nghệ sĩ yêu thích
-        </p>
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-          {MUSIC_DATA.favorites.map((s) => (
-            <div key={s.title} className="flex items-center gap-3 rounded-xl p-3" style={{ background: "rgba(244,114,182,0.06)", border: "1px solid rgba(244,114,182,0.15)" }}>
-              <span className="text-2xl flex-shrink-0">🎵</span>
-              <div className="min-w-0">
-                <p className="text-[13px] font-semibold truncate" style={{ color: "var(--text-heading)" }}>{s.title}</p>
-                <p className="text-[11px] truncate" style={{ color: "var(--text-muted)" }}>{s.artist}</p>
-              </div>
-              <span className="h-tag flex-shrink-0 text-[11px]" style={{ background: "rgba(244,114,182,0.1)", border: "1px solid rgba(244,114,182,0.2)", color: "#f472b6" }}>{s.mood}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Moods */}
-      <div className="flex flex-wrap gap-2">
-        {MUSIC_DATA.moods.map((m) => (
-          <span key={m} className="h-tag" style={{ background: "rgba(168,85,247,0.1)", border: "1px solid rgba(168,85,247,0.25)", color: "#a855f7" }}>{m}</span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function AnimeTab() {
-  return (
-    <div className="flex flex-col gap-6">
-      <p className="text-[14px] leading-[1.85]" style={{ color: "var(--text-muted)" }}>
-        {ANIME_DATA.desc}
-      </p>
-
-      {/* Anime list */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {ANIME_DATA.watching.map((a) => (
-          <div key={a.title} className="h-card p-5 flex gap-4 items-start">
-            <div className="flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center text-2xl" style={{ background: `${a.color}18`, border: `1px solid ${a.color}30` }}>
-              🎌
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center justify-between gap-2 mb-1">
-                <p className="text-[14px] font-bold truncate" style={{ color: "var(--text-heading)" }}>{a.title}</p>
-                <span className="text-[12px] font-bold flex-shrink-0" style={{ color: a.color }}>⭐ {a.rating}</span>
-              </div>
-              <p className="text-[11px] mb-2" style={{ color: "var(--text-muted)", fontFamily: "'DM Mono',monospace" }}>{a.genre} · {a.ep}</p>
-              <span className="h-tag text-[11px]" style={{ background: `${a.color}18`, border: `1px solid ${a.color}30`, color: a.color }}>
-                {a.status === "Đang xem" ? "📺 " : "✅ "}{a.status}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Genre tags */}
-      <div className="h-card p-5">
-        <p className="mb-3 text-[11px] uppercase tracking-[0.14em] font-semibold" style={{ color: "var(--text-muted)", fontFamily: "'DM Mono',monospace" }}>
-          Thể loại ưa thích
-        </p>
-        <div className="flex flex-wrap gap-2">
-          {ANIME_DATA.tags.map((t) => (
-            <span key={t} className="h-tag" style={{ background: "rgba(251,146,60,0.1)", border: "1px solid rgba(251,146,60,0.25)", color: "#fb923c" }}>{t}</span>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function GameTab() {
-  return (
-    <div className="flex flex-col gap-6">
-      <p className="text-[14px] leading-[1.85]" style={{ color: "var(--text-muted)" }}>
-        {GAME_DATA.desc}
-      </p>
-
-      {/* Genre bars */}
-      <div className="h-card p-6">
-        <p className="mb-4 text-[11px] uppercase tracking-[0.14em] font-semibold" style={{ color: "var(--text-muted)", fontFamily: "'DM Mono',monospace" }}>
-          Thể loại game
-        </p>
-        <div className="flex flex-col gap-4">
-          {GAME_DATA.genres.map((g) => (
-            <div key={g.name}>
-              <div className="flex justify-between mb-1.5 items-center">
-                <span className="text-[13px] font-medium flex items-center gap-2" style={{ color: "var(--text-heading)" }}>
-                  <span>{g.icon}</span>{g.name}
-                </span>
-                <span className="text-[11px] font-bold" style={{ color: g.color, fontFamily: "'DM Mono',monospace" }}>{g.pct}%</span>
-              </div>
-              <div className="h-skill-track">
-                <div className="h-bar h-full rounded-full" style={{ width: `${g.pct}%`, background: `linear-gradient(90deg,${g.color}55,${g.color})` }} />
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Favorite games */}
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-        {GAME_DATA.favorites.map((g) => (
-          <div key={g.name} className="h-card p-5 flex gap-4 items-start">
-            <div className="flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center text-2xl" style={{ background: `${g.color}18`, border: `1px solid ${g.color}30` }}>
-              {g.icon}
-            </div>
-            <div className="min-w-0">
-              <p className="text-[14px] font-bold" style={{ color: "var(--text-heading)" }}>{g.name}</p>
-              <p className="text-[12px] mt-0.5" style={{ color: "var(--text-muted)" }}>{g.role}</p>
-              <span className="h-tag mt-2 text-[11px]" style={{ background: `${g.color}18`, border: `1px solid ${g.color}30`, color: g.color }}>
-                🕐 {g.hrs}
-              </span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Playstyle */}
-      <div className="flex flex-wrap gap-2">
-        {GAME_DATA.playstyle.map((p) => (
-          <span key={p} className="h-tag" style={{ background: "rgba(52,211,153,0.1)", border: "1px solid rgba(52,211,153,0.25)", color: "#34d399" }}>{p}</span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* ── Main Page ── */
-const TABS = [
-  { id: "music", label: "Âm nhạc", icon: "🎵", grad: "h-grad-music", active: "active-music", color: "#f472b6" },
-  { id: "anime", label: "Anime",   icon: "🎌", grad: "h-grad-anime", active: "active-anime", color: "#fb923c" },
-  { id: "game",  label: "Game",    icon: "🎮", grad: "h-grad-game",  active: "active-game",  color: "#34d399" },
-];
 
 export default function HobbiesPage() {
   const [active, setActive] = useState("music");
-  const current = TABS.find((t) => t.id === active);
+  const current = HOBBY_TABS.find((t) => t.id === active);
 
   return (
     <>
@@ -317,7 +87,7 @@ export default function HobbiesPage() {
           {/* Sub-tab bar */}
           <div className="h-rise h-d2 mb-8 flex justify-center">
             <div className="flex gap-2 rounded-2xl p-1.5" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)" }}>
-              {TABS.map((t) => (
+              {HOBBY_TABS.map((t) => (
                 <button
                   key={t.id}
                   className={`h-sub-btn ${active === t.id ? t.active : "inactive"}`}

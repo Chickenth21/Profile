@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { FPT_PHOTOS, FPT_HIGHLIGHTS, TECH_STACK, EDU_TIMELINE } from "../../utils/constant";
 
 const STYLES = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap');
@@ -140,114 +141,7 @@ const STYLES = `
   .e-lightbox-next { right: 20px; }
 `;
 
-const FPT_PHOTOS = [
-  {
-    src: `${import.meta.env.BASE_URL}san-fpt.jpg`,
-    caption: "Sân trường – xe điện & cây vàng rực",
-  },
-  {
-    src: `${import.meta.env.BASE_URL}the-thao-fpt.jpg`,
-    caption: "Khu thể thao – sân bóng rổ ngoài trời",
-  },
-  {
-    src: `${import.meta.env.BASE_URL}thu-vien-fpt.jpeg`,
-    caption: "Thư viện FPT – không gian học tập hiện đại",
-  },
-  {
-    src: `${import.meta.env.BASE_URL}tuong-fpt.jpg`,
-    caption: "Tượng Self-Made Man – biểu tượng nghị lực",
-  },
-];
 
-const FPT_HIGHLIGHTS = [
-  {
-    icon: "🏙️",
-    title: "Campus Hà Nội",
-    desc: "Toà nhà xanh hiện đại, thiết kế thoáng mát tại Khu CNC Hòa Lạc",
-    color: "#6cbcff",
-  },
-  {
-    icon: "📚",
-    title: "Thư viện đa tầng",
-    desc: "Kho tài nguyên phong phú, phòng đọc yên tĩnh & không gian nhóm",
-    color: "#b388ff",
-  },
-  {
-    icon: "⚽",
-    title: "Khu thể thao",
-    desc: "Sân bóng rổ, sân cầu lông, phòng gym đầy đủ tiện ích",
-    color: "#34d399",
-  },
-  {
-    icon: "🚌",
-    title: "Xe điện nội khu",
-    desc: "Di chuyển thuận tiện giữa các toà nhà bằng xe bus điện miễn phí",
-    color: "#fb923c",
-  },
-  {
-    icon: "💼",
-    title: "OJT – Thực tập thực tế",
-    desc: "Chương trình On-the-Job-Training bắt buộc 6 tháng tại doanh nghiệp",
-    color: "#f472b6",
-  },
-  {
-    icon: "🌐",
-    title: "Môi trường quốc tế",
-    desc: "Giảng dạy song ngữ, hợp tác với hàng trăm doanh nghiệp công nghệ",
-    color: "#fbbf24",
-  },
-];
-
-const TECH_STACK = [
-  { name: "React", color: "#61dafb", icon: "⚛️" },
-  { name: "JavaScript", color: "#f7df1e", icon: "📜" },
-  { name: "Node.js", color: "#68a063", icon: "🟢" },
-  { name: "Java", color: "#f89820", icon: "☕" },
-  { name: "UI/UX", color: "#a855f7", icon: "🎨" },
-  { name: "MongoDB", color: "#4db33d", icon: "🍃" },
-  { name: "Express.js", color: "#888888", icon: "🚀" },
-  { name: "Git", color: "#f05032", icon: "🐙" },
-];
-
-const TIMELINE = [
-  {
-    year: "2010 – 2019",
-    title: "Tiểu học & THCS",
-    desc: "Học tập tại Trường TH&THCS Thái Hà. Xây dựng nền tảng kiến thức cơ bản và phát triển tư duy học tập.",
-    color: "#6cbcff",
-  },
-  {
-    year: "2019 – 2022",
-    title: "Trung học Phổ thông",
-    desc: "Tốt nghiệp Trường THPT Thái Phúc. Định hình đam mê với công nghệ và quyết định theo ngành CNTT.",
-    color: "#b388ff",
-  },
-  {
-    year: "2022",
-    title: "Nhập học Đại học FPT",
-    desc: "Nhập học Đại học FPT Hà Nội, ngành Công nghệ Thông tin. Làm quen với lập trình cơ bản và tư duy thuật toán.",
-    color: "#34d399",
-  },
-  {
-    year: "2023",
-    title: "Khám phá Web Development",
-    desc: "Học sâu về HTML, CSS, JavaScript và bắt đầu với React. Hoàn thành các dự án nhóm đầu tiên.",
-    color: "#a78bfa",
-  },
-  {
-    year: "2024",
-    title: "Fullstack & Dự án thực tế",
-    desc: "Phát triển RealERP — hệ thống quản lý bất động sản với React, Node.js, MongoDB. GPA đạt 0/4.0.",
-    color: "#fb923c",
-  },
-  {
-    year: "2025–2026",
-    title: "Tìm kiếm cơ hội",
-    desc: "Hoàn thiện portfolio, tìm kiếm vị trí thực tập Fullstack Developer và chuẩn bị tốt nghiệp.",
-    color: "#f472b6",
-    active: true,
-  },
-];
 
 export default function EducationPage({ profile }) {
   const { education, skills, specialization } = profile;
@@ -653,7 +547,7 @@ export default function EducationPage({ profile }) {
             />
 
             <div className="flex flex-col gap-0">
-              {TIMELINE.map((item, i) => (
+              {EDU_TIMELINE.map((item, i) => (
                 <div key={item.year} className="flex gap-4">
                   {/* Left: dot + line */}
                   <div className="flex flex-col items-center">
@@ -664,7 +558,7 @@ export default function EducationPage({ profile }) {
                         boxShadow: `0 0 10px ${item.color}55`,
                       }}
                     />
-                    {i < TIMELINE.length - 1 && (
+                    {i < EDU_TIMELINE.length - 1 && (
                       <div
                         className="e-timeline-line my-1 flex-1"
                         style={{ minHeight: 32 }}
