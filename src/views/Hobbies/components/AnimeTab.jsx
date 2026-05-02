@@ -41,6 +41,8 @@ const ANIME_STYLES = `
   .anime-slide-bg {
     position: absolute; inset: 0;
     transition: transform 0.6s ease;
+    background-size: cover;
+    background-position: center;
   }
   .anime-carousel:hover .anime-slide-bg { transform: scale(1.04); }
 
@@ -124,7 +126,33 @@ const ANIME_STYLES = `
   }
 `;
 
+const BASE = import.meta.env.BASE_URL;
+
 const FEATURED = [
+  {
+    title: "One Piece",
+    genre: "Adventure / Fantasy",
+    rating: 9.4,
+    status: "Đang xem",
+    ep: "1100+ tập",
+    color: "#fbbf24",
+    bg: "linear-gradient(135deg,#0d0a00 0%,#3d2800 50%,#6b4400 100%)",
+    image: `${BASE}one-piece.jpg`,
+    emoji: "🏴‍☠️",
+    desc: "Monkey D. Luffy cùng đồng đội lênh đênh trên Biển Lớn, tìm kiếm kho báu One Piece huyền thoại để trở thành Vua Hải Tặc.",
+  },
+  {
+    title: "Solo Leveling",
+    genre: "Action / Fantasy",
+    rating: 9.3,
+    status: "Đã xem",
+    ep: "12 tập",
+    color: "#818cf8",
+    bg: "linear-gradient(135deg,#05010d 0%,#1a0a40 50%,#2e1070 100%)",
+    image: `${BASE}solo-leveling.jpg`,
+    emoji: "⚡",
+    desc: "Sung Jin-Woo — thợ săn yếu nhất thế giới — trỗi dậy không giới hạn sau khi nhận được hệ thống độc nhất vô nhị.",
+  },
   {
     title: "Attack on Titan",
     genre: "Action / Dark Fantasy",
@@ -133,19 +161,9 @@ const FEATURED = [
     ep: "87 tập",
     color: "#fb923c",
     bg: "linear-gradient(135deg,#0d0500 0%,#3d1500 50%,#7c3500 100%)",
+    image: `${BASE}attack-on-titan.jpg`,
     emoji: "⚔️",
     desc: "Nhân loại chiến đấu sống còn trước những gã khổng lồ ăn thịt người — câu chuyện về tự do và hy sinh.",
-  },
-  {
-    title: "Steins;Gate",
-    genre: "Sci-fi / Thriller",
-    rating: 9.8,
-    status: "Đã xem",
-    ep: "24 tập",
-    color: "#60a5fa",
-    bg: "linear-gradient(135deg,#00090d 0%,#002240 50%,#003d6e 100%)",
-    emoji: "⏰",
-    desc: "Rintaro Okabe vô tình phát minh ra máy gửi tin nhắn về quá khứ — mỗi thay đổi mang đến thảm họa mới.",
   },
   {
     title: "Jujutsu Kaisen",
@@ -155,19 +173,9 @@ const FEATURED = [
     ep: "47 tập",
     color: "#f43f5e",
     bg: "linear-gradient(135deg,#0d0008 0%,#3d0020 50%,#7c0042 100%)",
+    image: `${BASE}jujutsu-kaisen.jpg`,
     emoji: "💀",
     desc: "Yuji Itadori nuốt ngón tay nguyền rủa của vương giả và trở thành chiến binh chú thuật.",
-  },
-  {
-    title: "Vinland Saga",
-    genre: "Historical / Drama",
-    rating: 9.2,
-    status: "Đã xem",
-    ep: "48 tập",
-    color: "#34d399",
-    bg: "linear-gradient(135deg,#000d07 0%,#002d18 50%,#004d28 100%)",
-    emoji: "🛡️",
-    desc: "Hành trình báo thù của chiến binh Viking Thorfinn dẫn đến những bài học về ý nghĩa thật sự của sức mạnh.",
   },
   {
     title: "Demon Slayer",
@@ -177,18 +185,20 @@ const FEATURED = [
     ep: "55 tập",
     color: "#e879f9",
     bg: "linear-gradient(135deg,#0a0010 0%,#2d0040 50%,#5a0080 100%)",
+    image: `${BASE}demon-slayer.jpg`,
     emoji: "🗡️",
     desc: "Tanjiro Kamado luyện tập không ngừng để trở thành thợ săn quỷ và giải cứu em gái.",
   },
 ];
 
 const ALL_ANIME = [
-  { title: "Attack on Titan", genre: "Action", rating: 9.9, status: "Đã xem", ep: "87 ep", color: "#fb923c", bg: "linear-gradient(135deg,#1a0a00,#7c3500)", emoji: "⚔️" },
-  { title: "Steins;Gate",      genre: "Sci-fi",  rating: 9.8, status: "Đã xem", ep: "24 ep", color: "#60a5fa", bg: "linear-gradient(135deg,#00090d,#003d6e)", emoji: "⏰" },
-  { title: "Jujutsu Kaisen",   genre: "Action",  rating: 9.5, status: "Đang xem", ep: "47 ep", color: "#f43f5e", bg: "linear-gradient(135deg,#0d0008,#7c0042)", emoji: "💀" },
-  { title: "Vinland Saga",     genre: "Drama",   rating: 9.2, status: "Đã xem", ep: "48 ep", color: "#34d399", bg: "linear-gradient(135deg,#000d07,#004d28)", emoji: "🛡️" },
-  { title: "Demon Slayer",     genre: "Fantasy", rating: 9.3, status: "Đã xem", ep: "55 ep", color: "#e879f9", bg: "linear-gradient(135deg,#0a0010,#5a0080)", emoji: "🗡️" },
-  { title: "One Piece",        genre: "Adventure", rating: 9.0, status: "Đang xem", ep: "1100+ ep", color: "#fbbf24", bg: "linear-gradient(135deg,#0d0a00,#6b4400)", emoji: "🏴‍☠️" },
+  { title: "One Piece",        genre: "Adventure", rating: 9.4, status: "Đang xem", ep: "1100+ ep", color: "#fbbf24", bg: "linear-gradient(135deg,#0d0a00,#6b4400)", image: `${BASE}one-piece.jpg`,         emoji: "🏴‍☠️" },
+  { title: "Solo Leveling",    genre: "Action",    rating: 9.3, status: "Đã xem",  ep: "12 ep",    color: "#818cf8", bg: "linear-gradient(135deg,#05010d,#2e1070)", image: `${BASE}solo-leveling.jpg`,    emoji: "⚡" },
+  { title: "Attack on Titan",  genre: "Action",    rating: 9.9, status: "Đã xem",  ep: "87 ep",    color: "#fb923c", bg: "linear-gradient(135deg,#1a0a00,#7c3500)",   image: `${BASE}attack-on-titan.jpg`,  emoji: "⚔️" },
+  { title: "Jujutsu Kaisen",   genre: "Action",    rating: 9.5, status: "Đang xem",ep: "47 ep",    color: "#f43f5e", bg: "linear-gradient(135deg,#0d0008,#7c0042)",   image: `${BASE}jujutsu-kaisen.jpg`,   emoji: "💀" },
+  { title: "Demon Slayer",     genre: "Fantasy",   rating: 9.3, status: "Đã xem",  ep: "55 ep",    color: "#e879f9", bg: "linear-gradient(135deg,#0a0010,#5a0080)",   image: `${BASE}demon-slayer.jpg`,     emoji: "🗡️" },
+  { title: "Steins;Gate",      genre: "Sci-fi",    rating: 9.8, status: "Đã xem",  ep: "24 ep",    color: "#60a5fa", bg: "linear-gradient(135deg,#00090d,#003d6e)",   emoji: "⏰" },
+  { title: "Vinland Saga",     genre: "Drama",     rating: 9.2, status: "Đã xem",  ep: "48 ep",    color: "#34d399", bg: "linear-gradient(135deg,#000d07,#004d28)",   emoji: "🛡️" },
 ];
 
 function StarRating({ rating, color }) {
@@ -246,29 +256,32 @@ function AnimeCarousel() {
             {/* Background */}
             <div
               className="anime-slide-bg"
-              style={{ background: s.bg }}
+              style={s.image
+                ? { backgroundImage: `url(${s.image})`, backgroundSize: "cover", backgroundPosition: "center" }
+                : { background: s.bg }
+              }
             >
-              {/* Manga grid texture */}
-              <div style={{
+              {/* Manga grid texture (only for non-image slides) */}
+              {!s.image && <div style={{
                 position: "absolute", inset: 0, opacity: 0.04,
                 backgroundImage: `repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(255,255,255,1) 26px,rgba(255,255,255,1) 27px),
                                   repeating-linear-gradient(90deg,transparent,transparent 26px,rgba(255,255,255,1) 26px,rgba(255,255,255,1) 27px)`,
-              }} />
+              }} />}
               {/* Glow blob */}
               <div style={{
                 position: "absolute", right: -60, top: -60,
                 width: 360, height: 360, borderRadius: "50%",
-                background: s.color, opacity: 0.12, filter: "blur(90px)",
+                background: s.color, opacity: s.image ? 0.06 : 0.12, filter: "blur(90px)",
               }} />
-              {/* Character emoji art */}
-              <div style={{
+              {/* Character emoji art (only for non-image slides) */}
+              {!s.image && <div style={{
                 position: "absolute", right: 28, bottom: 0,
                 fontSize: 160, lineHeight: 1, opacity: 0.18,
                 userSelect: "none", pointerEvents: "none",
                 filter: `drop-shadow(0 0 32px ${s.color})`,
               }}>
                 {s.emoji}
-              </div>
+              </div>}
             </div>
 
             <div className="anime-slide-overlay" />
@@ -347,21 +360,24 @@ export default function AnimeTab() {
             <div
               key={a.title}
               className="anime-card-poster"
-              style={{ minWidth: 130, height: 186, background: a.bg }}
+              style={a.image
+                ? { minWidth: 130, height: 186, backgroundImage: `url(${a.image})`, backgroundSize: "cover", backgroundPosition: "center" }
+                : { minWidth: 130, height: 186, background: a.bg }
+              }
             >
-              {/* Grid texture */}
-              <div style={{
+              {/* Grid texture (non-image only) */}
+              {!a.image && <div style={{
                 position: "absolute", inset: 0, opacity: 0.05,
                 backgroundImage: `repeating-linear-gradient(0deg,transparent,transparent 16px,rgba(255,255,255,1) 16px,rgba(255,255,255,1) 17px),
                                   repeating-linear-gradient(90deg,transparent,transparent 16px,rgba(255,255,255,1) 16px,rgba(255,255,255,1) 17px)`,
-              }} />
-              {/* Emoji art */}
-              <div style={{
+              }} />}
+              {/* Emoji art (non-image only) */}
+              {!a.image && <div style={{
                 position: "absolute", top: "50%", left: "50%",
                 transform: "translate(-50%, -58%)",
                 fontSize: 48, opacity: 0.35, userSelect: "none",
                 filter: `drop-shadow(0 0 10px ${a.color})`,
-              }}>{a.emoji}</div>
+              }}>{a.emoji}</div>}
               {/* Rating */}
               <div style={{
                 position: "absolute", top: 8, right: 8,
