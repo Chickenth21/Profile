@@ -42,7 +42,7 @@ export default function HobbiesPage({ initialTab = "music" }) {
     <>
       <style>{STYLES}</style>
       <div
-        className="relative z-[1] min-h-screen py-16 px-4 md:px-8"
+        className="relative z-[1] min-h-screen pt-6 pb-16 px-4 md:px-8"
         style={{ fontFamily: "'DM Sans',sans-serif" }}
       >
         {/* bg blobs */}
@@ -60,16 +60,8 @@ export default function HobbiesPage({ initialTab = "music" }) {
         />
 
         <div className="mx-auto max-w-[920px]">
-          {/* Header nhỏ hiển thị tab đang chọn */}
-          <div className="h-rise h-d1 mb-8">
-            <p className="mb-1 text-[11px] uppercase tracking-[0.18em]" style={{ color: "var(--text-muted)", fontFamily: "'DM Mono',monospace" }}>03 — Hobbies</p>
-            <h1 className="text-[clamp(28px,4vw,44px)] font-black leading-tight" style={{ fontFamily: "'Playfair Display',serif", color: "var(--text-heading)" }}>
-              <span className={currentGrad}>{LABEL_MAP[active]}</span>
-            </h1>
-          </div>
-
           {/* Content */}
-          <div className="h-rise h-d2" key={active}>
+          <div className="h-rise h-d1" key={active}>
             {active === "music" && <MusicTab />}
             {active === "anime" && <AnimeTab />}
             {active === "game"  && <GameTab />}

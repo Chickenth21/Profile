@@ -19,7 +19,7 @@ const ANIME_STYLES = `
     position: relative;
     border-radius: 24px;
     overflow: hidden;
-    min-height: 300px;
+    min-height: 450px;
     cursor: grab;
     user-select: none;
   }
@@ -33,18 +33,16 @@ const ANIME_STYLES = `
   .anime-slide {
     min-width: 100%;
     position: relative;
-    min-height: 300px;
+    min-height: 450px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
   }
   .anime-slide-bg {
     position: absolute; inset: 0;
-    transition: transform 0.6s ease;
     background-size: cover;
     background-position: center;
   }
-  .anime-carousel:hover .anime-slide-bg { transform: scale(1.04); }
 
   .anime-slide-overlay {
     position: absolute; inset: 0;
@@ -173,7 +171,7 @@ const FEATURED = [
     ep: "47 tập",
     color: "#f43f5e",
     bg: "linear-gradient(135deg,#0d0008 0%,#3d0020 50%,#7c0042 100%)",
-    image: `${BASE}jujutsu-kaisen.jpg`,
+    image: `${BASE}jujutsu-kaisen.png`,
     emoji: "💀",
     desc: "Yuji Itadori nuốt ngón tay nguyền rủa của vương giả và trở thành chiến binh chú thuật.",
   },
@@ -192,13 +190,81 @@ const FEATURED = [
 ];
 
 const ALL_ANIME = [
-  { title: "One Piece",        genre: "Adventure", rating: 9.4, status: "Đang xem", ep: "1100+ ep", color: "#fbbf24", bg: "linear-gradient(135deg,#0d0a00,#6b4400)", image: `${BASE}one-piece.jpg`,         emoji: "🏴‍☠️" },
-  { title: "Solo Leveling",    genre: "Action",    rating: 9.3, status: "Đã xem",  ep: "12 ep",    color: "#818cf8", bg: "linear-gradient(135deg,#05010d,#2e1070)", image: `${BASE}solo-leveling.jpg`,    emoji: "⚡" },
-  { title: "Attack on Titan",  genre: "Action",    rating: 9.9, status: "Đã xem",  ep: "87 ep",    color: "#fb923c", bg: "linear-gradient(135deg,#1a0a00,#7c3500)",   image: `${BASE}attack-on-titan.jpg`,  emoji: "⚔️" },
-  { title: "Jujutsu Kaisen",   genre: "Action",    rating: 9.5, status: "Đang xem",ep: "47 ep",    color: "#f43f5e", bg: "linear-gradient(135deg,#0d0008,#7c0042)",   image: `${BASE}jujutsu-kaisen.jpg`,   emoji: "💀" },
-  { title: "Demon Slayer",     genre: "Fantasy",   rating: 9.3, status: "Đã xem",  ep: "55 ep",    color: "#e879f9", bg: "linear-gradient(135deg,#0a0010,#5a0080)",   image: `${BASE}demon-slayer.jpg`,     emoji: "🗡️" },
-  { title: "Steins;Gate",      genre: "Sci-fi",    rating: 9.8, status: "Đã xem",  ep: "24 ep",    color: "#60a5fa", bg: "linear-gradient(135deg,#00090d,#003d6e)",   emoji: "⏰" },
-  { title: "Vinland Saga",     genre: "Drama",     rating: 9.2, status: "Đã xem",  ep: "48 ep",    color: "#34d399", bg: "linear-gradient(135deg,#000d07,#004d28)",   emoji: "🛡️" },
+  {
+    title: "One Piece",
+    genre: "Adventure",
+    rating: 9.4,
+    status: "Đang xem",
+    ep: "1100+ ep",
+    color: "#fbbf24",
+    bg: "linear-gradient(135deg,#0d0a00,#6b4400)",
+    image: `${BASE}one-piece.jpg`,
+    emoji: "🏴‍☠️",
+  },
+  {
+    title: "Solo Leveling",
+    genre: "Action",
+    rating: 9.3,
+    status: "Đã xem",
+    ep: "12 ep",
+    color: "#818cf8",
+    bg: "linear-gradient(135deg,#05010d,#2e1070)",
+    image: `${BASE}solo-leveling.jpg`,
+    emoji: "⚡",
+  },
+  {
+    title: "Attack on Titan",
+    genre: "Action",
+    rating: 9.9,
+    status: "Đã xem",
+    ep: "87 ep",
+    color: "#fb923c",
+    bg: "linear-gradient(135deg,#1a0a00,#7c3500)",
+    image: `${BASE}attack-on-titan.jpg`,
+    emoji: "⚔️",
+  },
+  {
+    title: "Jujutsu Kaisen",
+    genre: "Action",
+    rating: 9.5,
+    status: "Đang xem",
+    ep: "47 ep",
+    color: "#f43f5e",
+    bg: "linear-gradient(135deg,#0d0008,#7c0042)",
+    image: `${BASE}jujutsu-kaisen.png`,
+    emoji: "💀",
+  },
+  {
+    title: "Demon Slayer",
+    genre: "Fantasy",
+    rating: 9.3,
+    status: "Đã xem",
+    ep: "55 ep",
+    color: "#e879f9",
+    bg: "linear-gradient(135deg,#0a0010,#5a0080)",
+    image: `${BASE}demon-slayer.jpg`,
+    emoji: "🗡️",
+  },
+  {
+    title: "Steins;Gate",
+    genre: "Sci-fi",
+    rating: 9.8,
+    status: "Đã xem",
+    ep: "24 ep",
+    color: "#60a5fa",
+    bg: "linear-gradient(135deg,#00090d,#003d6e)",
+    emoji: "⏰",
+  },
+  {
+    title: "Vinland Saga",
+    genre: "Drama",
+    rating: 9.2,
+    status: "Đã xem",
+    ep: "48 ep",
+    color: "#34d399",
+    bg: "linear-gradient(135deg,#000d07,#004d28)",
+    emoji: "🛡️",
+  },
 ];
 
 function StarRating({ rating, color }) {
@@ -206,7 +272,15 @@ function StarRating({ rating, color }) {
   return (
     <span style={{ display: "inline-flex", gap: 2 }}>
       {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i} style={{ color: i < full ? "#fbbf24" : "rgba(255,255,255,0.2)", fontSize: 13 }}>★</span>
+        <span
+          key={i}
+          style={{
+            color: i < full ? "#fbbf24" : "rgba(255,255,255,0.2)",
+            fontSize: 13,
+          }}
+        >
+          ★
+        </span>
       ))}
     </span>
   );
@@ -230,7 +304,9 @@ function AnimeCarousel() {
 
   // Swipe support
   const touchStartX = useRef(null);
-  const onTouchStart = (e) => { touchStartX.current = e.touches[0].clientX; };
+  const onTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
   const onTouchEnd = (e) => {
     if (touchStartX.current === null) return;
     const dx = e.changedTouches[0].clientX - touchStartX.current;
@@ -256,71 +332,169 @@ function AnimeCarousel() {
             {/* Background */}
             <div
               className="anime-slide-bg"
-              style={s.image
-                ? { backgroundImage: `url(${s.image})`, backgroundSize: "cover", backgroundPosition: "center" }
-                : { background: s.bg }
+              style={
+                s.image
+                  ? {
+                      backgroundImage: `url(${s.image})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }
+                  : { background: s.bg }
               }
             >
               {/* Manga grid texture (only for non-image slides) */}
-              {!s.image && <div style={{
-                position: "absolute", inset: 0, opacity: 0.04,
-                backgroundImage: `repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(255,255,255,1) 26px,rgba(255,255,255,1) 27px),
+              {!s.image && (
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    opacity: 0.04,
+                    backgroundImage: `repeating-linear-gradient(0deg,transparent,transparent 26px,rgba(255,255,255,1) 26px,rgba(255,255,255,1) 27px),
                                   repeating-linear-gradient(90deg,transparent,transparent 26px,rgba(255,255,255,1) 26px,rgba(255,255,255,1) 27px)`,
-              }} />}
+                  }}
+                />
+              )}
               {/* Glow blob */}
-              <div style={{
-                position: "absolute", right: -60, top: -60,
-                width: 360, height: 360, borderRadius: "50%",
-                background: s.color, opacity: s.image ? 0.06 : 0.12, filter: "blur(90px)",
-              }} />
+              <div
+                style={{
+                  position: "absolute",
+                  right: -60,
+                  top: -60,
+                  width: 360,
+                  height: 360,
+                  borderRadius: "50%",
+                  background: s.color,
+                  opacity: s.image ? 0.06 : 0.12,
+                  filter: "blur(90px)",
+                }}
+              />
               {/* Character emoji art (only for non-image slides) */}
-              {!s.image && <div style={{
-                position: "absolute", right: 28, bottom: 0,
-                fontSize: 160, lineHeight: 1, opacity: 0.18,
-                userSelect: "none", pointerEvents: "none",
-                filter: `drop-shadow(0 0 32px ${s.color})`,
-              }}>
-                {s.emoji}
-              </div>}
+              {!s.image && (
+                <div
+                  style={{
+                    position: "absolute",
+                    right: 28,
+                    bottom: 0,
+                    fontSize: 160,
+                    lineHeight: 1,
+                    opacity: 0.18,
+                    userSelect: "none",
+                    pointerEvents: "none",
+                    filter: `drop-shadow(0 0 32px ${s.color})`,
+                  }}
+                >
+                  {s.emoji}
+                </div>
+              )}
             </div>
 
             <div className="anime-slide-overlay" />
 
             {/* Content */}
             <div className="anime-slide-content">
-              <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: "0.2em", color: s.color, textTransform: "uppercase", marginBottom: 8 }}>
+              <p
+                style={{
+                  fontFamily: "'DM Mono',monospace",
+                  fontSize: 10,
+                  letterSpacing: "0.2em",
+                  color: s.color,
+                  textTransform: "uppercase",
+                  marginBottom: 8,
+                }}
+              >
                 🎌 Featured Anime · {i + 1}/{FEATURED.length}
               </p>
-              <h2 style={{ fontFamily: "'Playfair Display',serif", fontSize: "clamp(22px,4vw,36px)", fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: 8 }}>
+              <h2
+                style={{
+                  fontFamily: "'Playfair Display',serif",
+                  fontSize: "clamp(22px,4vw,36px)",
+                  fontWeight: 900,
+                  color: "#fff",
+                  lineHeight: 1.1,
+                  marginBottom: 8,
+                }}
+              >
                 {s.title}
               </h2>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginBottom: 8,
+                }}
+              >
                 <StarRating rating={s.rating} />
-                <span style={{
-                  fontFamily: "'DM Mono',monospace", fontWeight: 700, fontSize: 13,
-                  background: s.color, color: "#000", borderRadius: 6, padding: "2px 8px",
-                }}>
+                <span
+                  style={{
+                    fontFamily: "'DM Mono',monospace",
+                    fontWeight: 700,
+                    fontSize: 13,
+                    background: s.color,
+                    color: "#000",
+                    borderRadius: 6,
+                    padding: "2px 8px",
+                  }}
+                >
                   {s.rating}
                 </span>
-                <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: "rgba(255,255,255,0.45)" }}>
+                <span
+                  style={{
+                    fontFamily: "'DM Mono',monospace",
+                    fontSize: 11,
+                    color: "rgba(255,255,255,0.45)",
+                  }}
+                >
                   {s.genre} · {s.ep}
                 </span>
               </div>
-              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, maxWidth: 400, marginBottom: 14 }}>
+              <p
+                style={{
+                  fontSize: 13,
+                  color: "rgba(255,255,255,0.6)",
+                  lineHeight: 1.7,
+                  maxWidth: 400,
+                  marginBottom: 14,
+                }}
+              >
                 {s.desc}
               </p>
-              {s.status === "Đang xem"
-                ? <span className="anime-status-live"><span style={{ width: 6, height: 6, borderRadius: "50%", background: "#ef4444", display: "inline-block" }} />ĐANG XEM</span>
-                : <span className="anime-status-done">✓ ĐÃ XEM XONG</span>
-              }
+              {s.status === "Đang xem" ? (
+                <span className="anime-status-live">
+                  <span
+                    style={{
+                      width: 6,
+                      height: 6,
+                      borderRadius: "50%",
+                      background: "#ef4444",
+                      display: "inline-block",
+                    }}
+                  />
+                  ĐANG XEM
+                </span>
+              ) : (
+                <span className="anime-status-done">✓ ĐÃ XEM XONG</span>
+              )}
             </div>
           </div>
         ))}
       </div>
 
       {/* Arrows */}
-      <button className="anime-nav-btn anime-nav-prev" onClick={() => goTo(current - 1)} aria-label="Previous">‹</button>
-      <button className="anime-nav-btn anime-nav-next" onClick={() => goTo(current + 1)} aria-label="Next">›</button>
+      <button
+        className="anime-nav-btn anime-nav-prev"
+        onClick={() => goTo(current - 1)}
+        aria-label="Previous"
+      >
+        ‹
+      </button>
+      <button
+        className="anime-nav-btn anime-nav-next"
+        onClick={() => goTo(current + 1)}
+        aria-label="Next"
+      >
+        ›
+      </button>
 
       {/* Dots */}
       <div className="anime-dots">
@@ -347,12 +521,47 @@ export default function AnimeTab() {
 
       {/* ── ALL ANIME SCROLL ROW ── */}
       <div>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: 12,
+          }}
+        >
           <div>
-            <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: "0.18em", color: "#fb923c", textTransform: "uppercase", marginBottom: 2 }}>Most Popular</p>
-            <p style={{ fontFamily: "'Playfair Display',serif", fontSize: 17, fontWeight: 800, color: "var(--text-heading)" }}>Danh sách yêu thích</p>
+            <p
+              style={{
+                fontFamily: "'DM Mono',monospace",
+                fontSize: 10,
+                letterSpacing: "0.18em",
+                color: "#fb923c",
+                textTransform: "uppercase",
+                marginBottom: 2,
+              }}
+            >
+              Most Popular
+            </p>
+            <p
+              style={{
+                fontFamily: "'Playfair Display',serif",
+                fontSize: 17,
+                fontWeight: 800,
+                color: "var(--text-heading)",
+              }}
+            >
+              Danh sách yêu thích
+            </p>
           </div>
-          <span style={{ fontFamily: "'DM Mono',monospace", fontSize: 11, color: "var(--text-muted)" }}>{ALL_ANIME.length} series</span>
+          <span
+            style={{
+              fontFamily: "'DM Mono',monospace",
+              fontSize: 11,
+              color: "var(--text-muted)",
+            }}
+          >
+            {ALL_ANIME.length} series
+          </span>
         </div>
 
         <div className="anime-scroll-row">
@@ -360,34 +569,86 @@ export default function AnimeTab() {
             <div
               key={a.title}
               className="anime-card-poster"
-              style={a.image
-                ? { minWidth: 130, height: 186, backgroundImage: `url(${a.image})`, backgroundSize: "cover", backgroundPosition: "center" }
-                : { minWidth: 130, height: 186, background: a.bg }
+              style={
+                a.image
+                  ? {
+                      minWidth: 130,
+                      height: 186,
+                      backgroundImage: `url(${a.image})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }
+                  : { minWidth: 130, height: 186, background: a.bg }
               }
             >
               {/* Grid texture (non-image only) */}
-              {!a.image && <div style={{
-                position: "absolute", inset: 0, opacity: 0.05,
-                backgroundImage: `repeating-linear-gradient(0deg,transparent,transparent 16px,rgba(255,255,255,1) 16px,rgba(255,255,255,1) 17px),
+              {!a.image && (
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    opacity: 0.05,
+                    backgroundImage: `repeating-linear-gradient(0deg,transparent,transparent 16px,rgba(255,255,255,1) 16px,rgba(255,255,255,1) 17px),
                                   repeating-linear-gradient(90deg,transparent,transparent 16px,rgba(255,255,255,1) 16px,rgba(255,255,255,1) 17px)`,
-              }} />}
+                  }}
+                />
+              )}
               {/* Emoji art (non-image only) */}
-              {!a.image && <div style={{
-                position: "absolute", top: "50%", left: "50%",
-                transform: "translate(-50%, -58%)",
-                fontSize: 48, opacity: 0.35, userSelect: "none",
-                filter: `drop-shadow(0 0 10px ${a.color})`,
-              }}>{a.emoji}</div>}
+              {!a.image && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -58%)",
+                    fontSize: 48,
+                    opacity: 0.35,
+                    userSelect: "none",
+                    filter: `drop-shadow(0 0 10px ${a.color})`,
+                  }}
+                >
+                  {a.emoji}
+                </div>
+              )}
               {/* Rating */}
-              <div style={{
-                position: "absolute", top: 8, right: 8,
-                background: a.color, color: "#000", borderRadius: 6,
-                fontFamily: "'DM Mono',monospace", fontSize: 10, fontWeight: 800,
-                padding: "2px 6px",
-              }}>{a.rating}</div>
+              <div
+                style={{
+                  position: "absolute",
+                  top: 8,
+                  right: 8,
+                  background: a.color,
+                  color: "#000",
+                  borderRadius: 6,
+                  fontFamily: "'DM Mono',monospace",
+                  fontSize: 10,
+                  fontWeight: 800,
+                  padding: "2px 6px",
+                }}
+              >
+                {a.rating}
+              </div>
               <div className="anime-poster-overlay">
-                <p style={{ fontFamily: "'Playfair Display',serif", fontSize: 13, fontWeight: 800, color: "#fff", lineHeight: 1.2, marginBottom: 2 }}>{a.title}</p>
-                <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 9, color: "rgba(255,255,255,0.45)" }}>{a.ep}</p>
+                <p
+                  style={{
+                    fontFamily: "'Playfair Display',serif",
+                    fontSize: 13,
+                    fontWeight: 800,
+                    color: "#fff",
+                    lineHeight: 1.2,
+                    marginBottom: 2,
+                  }}
+                >
+                  {a.title}
+                </p>
+                <p
+                  style={{
+                    fontFamily: "'DM Mono',monospace",
+                    fontSize: 9,
+                    color: "rgba(255,255,255,0.45)",
+                  }}
+                >
+                  {a.ep}
+                </p>
               </div>
             </div>
           ))}
@@ -396,12 +657,32 @@ export default function AnimeTab() {
 
       {/* ── GENRE TAGS ── */}
       <div className="h-card p-5">
-        <p style={{ fontFamily: "'DM Mono',monospace", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--text-muted)", marginBottom: 12 }}>
+        <p
+          style={{
+            fontFamily: "'DM Mono',monospace",
+            fontSize: 10,
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            color: "var(--text-muted)",
+            marginBottom: 12,
+          }}
+        >
           Thể loại ưa thích
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-          {["Action 🗡️", "Fantasy 🔮", "Drama 🎭", "Sci-fi 🚀", "Shounen 💪", "Thriller 😱", "Historical 🏛️", "Adventure ⛵"].map((t) => (
-            <span key={t} className="anime-tag-chip">{t}</span>
+          {[
+            "Action 🗡️",
+            "Fantasy 🔮",
+            "Drama 🎭",
+            "Sci-fi 🚀",
+            "Shounen 💪",
+            "Thriller 😱",
+            "Historical 🏛️",
+            "Adventure ⛵",
+          ].map((t) => (
+            <span key={t} className="anime-tag-chip">
+              {t}
+            </span>
           ))}
         </div>
       </div>

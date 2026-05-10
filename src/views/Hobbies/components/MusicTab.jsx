@@ -52,13 +52,6 @@ export default function MusicTab() {
   return (
     <div className="flex flex-col gap-6">
       <style>{MUSIC_STYLES}</style>
-      <p
-        className="text-[14px] leading-[1.85]"
-        style={{ color: "var(--text-muted)" }}
-      >
-        {MUSIC_DATA.desc}
-      </p>
-
       {/* Genre bars */}
       <div className="h-card p-6">
         <p
